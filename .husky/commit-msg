@@ -1,0 +1,15 @@
+# Проверка формата сообщения коммита (Conventional Commits).
+msg=$(head -n 1 "$1")
+
+if printf '%s' "$msg" | grep -Eq '^(feat|fix|docs|chore|refactor|test|ci|build|perf|style)(\([^)]+\))?: .+'; then
+  exit 0
+fi
+
+if printf '%s' "$msg" | grep -Eq '^(Merge|Revert) '; then
+  exit 0
+fi
+
+echo "✖ Некорректное сообщение коммита: \"$msg\"" >&2
+echo "  Ожидается Conventional Commits: type(scope): summary" >&2
+echo "  Разрешённые типы: feat, fix, docs, chore, refactor, test, ci, build, perf, style" >&2
+exit 1

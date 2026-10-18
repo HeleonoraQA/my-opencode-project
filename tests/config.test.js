@@ -13,6 +13,10 @@ describe("opencode.json", () => {
     expect(config.$schema).toBe("https://opencode.ai/config.json");
   });
 
+  it("loads rules.md as an instruction file", () => {
+    expect(config.instructions).toContain("rules.md");
+  });
+
   it("denies reading and editing .env files", () => {
     expect(config.permissions).toEqual(
       expect.arrayContaining([

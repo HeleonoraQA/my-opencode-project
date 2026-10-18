@@ -7,4 +7,5 @@
 - [2026-10-18] Обновлён `AGENTS.md` под текущее состояние репозитория.
 - [2026-10-18] Добавлены e2e-тесты прав (`tests/e2e/permissions.test.js`) и матчер `src/permissions.js`; всего 42 теста.
 - [2026-10-18] Автоматизация проверок: GitHub Actions CI (lint + test) и husky pre-commit-хук.
+- [2026-10-18] Добавлены `rules.md` (подключён через `instructions`) и хуки `pre-push` + `commit-msg` (Conventional Commits).
 - Следующий шаг: расширять покрытие e2e-сценариев и поддерживать их прохождение.

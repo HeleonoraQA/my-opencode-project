@@ -10,12 +10,17 @@ describe("repository structure", () => {
   it.each([
     "AGENTS.md",
     "README.md",
+    "rules.md",
     "opencode.json",
     "docs/plan.md",
     "docs/memory.md",
     "docs/about.md",
     ".opencode/skills/run-tests/SKILL.md",
     ".opencode/skills/lint/SKILL.md",
+    ".husky/pre-commit",
+    ".husky/pre-push",
+    ".husky/commit-msg",
+    ".github/workflows/ci.yml",
   ])("includes %s", (relative) => {
     expect(existsSync(path(relative))).toBe(true);
   });
