@@ -1,3 +1,12 @@
 {
-  "$schema": "https://opencode.ai/config.json"
+  "$schema": "https://opencode.ai/config.json",
+  "permissions": [
+    { "action": "edit", "resource": "*", "effect": "allow" },
+    { "action": "edit", "resource": "*.env", "effect": "deny" },
+    { "action": "edit", "resource": "*.env.*", "effect": "deny" },
+    { "action": "shell", "resource": "*", "effect": "ask" },
+    { "action": "shell", "resource": "git *", "effect": "allow" },
+    { "action": "shell", "resource": "npm test", "effect": "allow" },
+    { "action": "shell", "resource": "ls *", "effect": "allow" }
+  ]
 }
