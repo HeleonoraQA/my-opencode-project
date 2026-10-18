@@ -13,7 +13,8 @@ Layout:
 - `opencode.json` — OpenCode V2 configuration (`permissions` rules)
 - `docs/` — `plan.md`, `memory.md`, `about.md`
 - `.opencode/skills/` — `run-tests/SKILL.md`, `lint/SKILL.md`
-- `tests/` — Vitest suites (`config.test.js`, `structure.test.js`)
+- `src/permissions.js` — OpenCode `permissions` matcher (last-match-wins, `*`/`?` globs)
+- `tests/` — Vitest suites: `config.test.js`, `structure.test.js`, `e2e/permissions.test.js`
 - `eslint.config.js`, `package.json`, `package-lock.json` — toolchain
 - `node_modules/` — installed deps, git-ignored (never edit by hand)
 
@@ -21,6 +22,7 @@ Layout:
 
 - Install deps: `npm install`
 - Run tests once: `npm test` (Vitest)
+- Run e2e tests only: `npm run test:e2e`
 - Watch tests: `npm run test:watch`
 - Lint: `npm run lint`
 - Lint and autofix: `npm run lint -- --fix`
