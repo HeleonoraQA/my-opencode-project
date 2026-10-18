@@ -3,7 +3,7 @@
   "permissions": [
     { "action": "read", "resource": "*.env", "effect": "deny" },
     { "action": "read", "resource": "*.env.*", "effect": "deny" },
-    { "action": "edit", "resource": "*", "effect": "allow" },
+    { "action": "edit", "resource": "*", "effect": "ask" },
     { "action": "edit", "resource": "*.env", "effect": "deny" },
     { "action": "edit", "resource": "*.env.*", "effect": "deny" },
     { "action": "shell", "resource": "*", "effect": "ask" },
