@@ -20,6 +20,5 @@ Layout:
 - Once a project is added, replace this file with real, repo-specific instructions (exact commands, entrypoints, package boundaries, test workflow).
 
 ## Правила безопасности
-- Чтение файлов `.env` и `.env.*` разрешено.
-- Никогда не изменять файлы `.env` или `.env.*`.
-- Перед операциями изменения проверять, не попадает ли путь под запрет.
+- Никогда не читать и не изменять файлы `.env` или `.env.*`.
+- Перед выполнением любых операций с файлами проверять, не попадает ли путь под запрет.
