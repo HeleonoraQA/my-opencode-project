@@ -5,6 +5,7 @@
   "description": "OpenCode configuration scaffold: agent instructions, permissions, skills, and documentation.",
   "type": "module",
   "scripts": {
+    "prepare": "husky",
     "test": "vitest run",
     "test:e2e": "vitest run tests/e2e",
     "test:watch": "vitest",
@@ -13,6 +14,7 @@
   },
   "devDependencies": {
     "eslint": "^9.0.0",
+    "husky": "^9.1.7",
     "vitest": "^3.0.0"
   }
 }
