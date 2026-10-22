@@ -36,6 +36,13 @@
 - Проверка UI через Playwright MCP (Chrome headless): сценарии `7×8=56`, `1,2+3,4=4,6`, `9÷4=2,25`, `50%→0,5`, `5÷0→Ошибка`, backspace `123→12`, клавиатура `7*6 Enter=42`; консоль — 0 ошибок, 0 предупреждений.
 - Скриншоты: `docs/screenshots/calculator.png` (1280×800) и `docs/screenshots/calculator-mobile.png` (390×844).
 
+## UI e2e (Playwright Test)
+- `playwright.config.js`: `testDir: tests/ui`, Chrome channel (системный Chrome, браузеры не скачиваются), viewport 1280×800, `webServer` поднимает `tests/ui/server.mjs` на `127.0.0.1:8123`.
+- `tests/ui/server.mjs` — статический сервер проекта (без зависимостей): отдаёт `calculator.html` на `/`, проверяет путь на traversal.
+- `tests/ui/calculator.spec.js` — один сквозной сценарий: загрузка страницы, `9 ÷ 4 = 2,25`, `5 ÷ 0 → Ошибка`, `C → 0`, клавиатура `7*6 Enter = 42`, финал `12,5 × 4 = 50`; собирает `console`/`pageerror` и требует пустой список ошибок; сохраняет `docs/screenshots/e2e-calculator.png`.
+- Vitest не подхватывает UI-спеки: в `vitest.config.js` добавлен `exclude: tests/ui/**`; запуск — `npm run test:ui`.
+- CI: шаг `npm run test:ui` после `npm test`.
+
 ## Навыки
 - `lint` — автоматический (запускается через `pre-commit`).
 - `run-tests` — ручной, только по команде пользователя.
@@ -43,8 +50,9 @@
 ## Команды
 - `npm install` — установка зависимостей.
 - `npm run lint` — проверка ESLint.
-- `npm test` — все тесты (112: 18 config + 19 structure + 48 e2e + 27 plugins).
+- `npm test` — все тесты (116: 18 config + 23 structure + 48 e2e + 27 plugins).
 - `npm run test:e2e` — только e2e-тесты прав.
+- `npm run test:ui` — UI e2e на Playwright Test (1 тест, Chrome channel).
 - `npm run test:watch` — тесты в режиме наблюдения.
 
 ## Документация

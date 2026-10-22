@@ -18,15 +18,18 @@
 | `calculator.html` | Демо-калькулятор (HTML/CSS/JS в одном файле) для проверки UI через Playwright MCP |
 | `.opencode/plugins/lint-and-guard/` | Плагин: `eslint --fix` после правок, блокировка защищённых путей |
 | `.opencode/skills/` | Навыки агента: `lint` (автоматический), `run-tests` (ручной) |
-| `tests/` | Тесты конфигурации, структуры, прав и плагина |
+| `tests/` | Тесты конфигурации, структуры, прав и плагина (Vitest) |
+| `tests/ui/` | UI e2e на Playwright Test (калькулятор) + статический сервер для фикстур |
+| `playwright.config.js` | Конфиг UI-тестов: Chrome channel, webServer на 127.0.0.1:8123 |
 | `docs/` | `plan.md`, `memory.md`, `about.md`, скриншоты проверок |
-| `.husky/`, `.github/workflows/ci.yml` | Git-хуки и CI (lint + test) |
+| `.husky/`, `.github/workflows/ci.yml` | Git-хуки и CI (lint + test + UI e2e) |
 
 ## Команды
 - `npm install` — установка зависимостей
 - `npm run lint` — проверка ESLint
-- `npm test` — все тесты (112)
+- `npm test` — все тесты (116)
 - `npm run test:e2e` — только e2e-тесты прав
+- `npm run test:ui` — UI e2e на Playwright Test (1 тест, Chrome)
 - `npm run test:watch` — тесты в режиме наблюдения
 
 ## Документация

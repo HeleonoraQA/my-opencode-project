@@ -15,6 +15,7 @@
   - `.opencode/skills/` — навыки агента (`lint`, `run-tests`)
   - `.opencode/plugins/` — плагин V2 `lint-and-guard` (автолинтер в `tool.hook("execute.after")`, блокировка защищённых путей в `tool.hook("execute.before")`)
   - `tests/` — тесты конфигурации, структуры и прав доступа
+  - `tests/ui/` — UI e2e на Playwright Test (`calculator.spec.js`, статический сервер `server.mjs`), `playwright.config.js` поднимает сервер и использует Chrome channel
   - `docs/` — документация проекта (`plan.md`, `memory.md`, `about.md`)
   - `.husky/` — Git-хуки (`pre-commit`, `pre-push`, `commit-msg`)
   - `.github/workflows/ci.yml` — проверка в GitHub Actions
@@ -25,6 +26,7 @@
 - Запуск всех тестов: `npm test`
 - Запуск e2e-тестов: `npm run test:e2e`
 - Запуск тестов в режиме наблюдения: `npm run test:watch`
+- Запуск UI e2e (Playwright): `npm run test:ui`
 - Проверка линтером: `npm run lint`
 - Исправление ошибок линтером: `npm run lint -- --fix`
 
@@ -41,7 +43,7 @@
 - **Реализация запрета (OpenCode V2):** глоб-паттерны в `permissions` — `*.env`, `*.env.*`, `*secrets/*`, `*.key`, `*.pem` для `read` и `edit` (в V2 `*` совпадает и с `/`, поэтому правило действует на любой вложенности; префикс `**/` не нужен и не покрывает корневой `.env`). Дополнительно тот же набор продублирован в `policies` как `tool.use` → `deny`: policy-запрет не перекрывается сохранёнными разрешениями «Allow always» и правилами агентов. Плагин `lint-and-guard` дополнительно блокирует эти пути в `execute.before` (защита в глубину).
 - **Операции с файлами:** правка, создание и другие операции с файлами требуют подтверждения.
 - **Права shell:** по умолчанию любая команда требует подтверждения. Без подтверждения разрешены только `git *` (кроме `git push` — он всегда `ask`), `npm test`, `ls *`.
-- **Автоматические проверки:** `pre-commit` запускает только `npm run lint` (навык `lint` — автоматический). `pre-push` запускает `npm run lint && npm test`. GitHub Actions (`.github/workflows/ci.yml`) запускает `npm run lint && npm test` при `push` и `pull_request`. Соблюдение Conventional Commits проверяется хуком `commit-msg`. Дополнительно плагин `.opencode/plugins/lint-and-guard/` после успешного `write`/`edit`/`patch` запускает `eslint --fix` по изменённому `.js`-файлу (остальные расширения не покрыты `eslint.config.js`), а в `execute.before` блокирует файловые инструменты на защищённых путях. Линтер запускается через `node` из PATH: `process.execPath` в рантайме OpenCode — это `opencode-cli.exe`, а не Node. Правки самого плагина подхватываются в уже открытой сессии только после её перезапуска (или перезапуска приложения): горячая перезагрузка и `POST /api/location/reload` пересоздают плагин, но хуки в текущей сессии не восстанавливаются. Основная защита секретов — `permissions` + `policies` в `opencode.json`: настроенный `deny` не доходит до хуков.
+- **Автоматические проверки:** `pre-commit` запускает только `npm run lint` (навык `lint` — автоматический). `pre-push` запускает `npm run lint && npm test`. GitHub Actions (`.github/workflows/ci.yml`) запускает `npm run lint`, `npm test` и `npm run test:ui` при `push` и `pull_request`. Соблюдение Conventional Commits проверяется хуком `commit-msg`. Дополнительно плагин `.opencode/plugins/lint-and-guard/` после успешного `write`/`edit`/`patch` запускает `eslint --fix` по изменённому `.js`-файлу (остальные расширения не покрыты `eslint.config.js`), а в `execute.before` блокирует файловые инструменты на защищённых путях. Линтер запускается через `node` из PATH: `process.execPath` в рантайме OpenCode — это `opencode-cli.exe`, а не Node. Правки самого плагина подхватываются в уже открытой сессии только после её перезапуска (или перезапуска приложения): горячая перезагрузка и `POST /api/location/reload` пересоздают плагин, но хуки в текущей сессии не восстанавливаются. Основная защита секретов — `permissions` + `policies` в `opencode.json`: настроенный `deny` не доходит до хуков.
 - **Навыки:** `lint` — автоматический (запускается через хук `pre-commit` после редактирования), `run-tests` — ручной (вызывается только по команде пользователя).
 - **Безопасность:** никогда не коммитить секреты, ключи, `node_modules` и артефакты сборки.
 - **Изменения вне проекта:** не изменять файлы за пределами проекта.
