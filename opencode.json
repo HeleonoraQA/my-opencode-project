@@ -16,6 +16,7 @@
     { "action": "shell", "resource": "*", "effect": "ask" },
     { "action": "shell", "resource": "git *", "effect": "allow" },
     { "action": "shell", "resource": "git push", "effect": "ask" },
+    { "action": "shell", "resource": "git push *", "effect": "ask" },
     { "action": "shell", "resource": "npm test", "effect": "allow" },
     { "action": "shell", "resource": "ls *", "effect": "allow" }
   ],

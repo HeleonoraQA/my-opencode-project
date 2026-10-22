@@ -52,7 +52,6 @@ describe("e2e: shell policy", () => {
   it.each([
     "git status",
     "git status --short",
-    "git push origin main",
     "git fetch",
     "npm test",
     "ls",
@@ -61,8 +60,17 @@ describe("e2e: shell policy", () => {
     expect(check("shell", command)).toBe("allow");
   });
 
-  it.each(["rm -rf build", "npm install", "curl http://example.com", "node script.js"])(
-    "asks before command: %s",
+  it.each([
+    "rm -rf build",
+    "npm install",
+    "curl http://example.com",
+    "node script.js",
+  ])("asks before command: %s", (command) => {
+    expect(check("shell", command)).toBe("ask");
+  });
+
+  it.each(["git push", "git push origin main", "git push --force"])(
+    "asks before publishing command: %s",
     (command) => {
       expect(check("shell", command)).toBe("ask");
     },
