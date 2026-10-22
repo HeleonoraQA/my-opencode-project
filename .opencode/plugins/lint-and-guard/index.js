@@ -1,5 +1,12 @@
+/**
+ * OpenCode V2 plugin: auto-lint edited files and block protected paths.
+ *
+ * The linter is spawned through `node` (see `nodeBinary`), because the OpenCode
+ * server runs as its own binary (`opencode-cli.exe`), so `process.execPath`
+ * cannot be used to execute JavaScript files.
+ */
 import { execFile } from "node:child_process";
-import { join } from "node:path";
+import { basename, join } from "node:path";
 import { promisify } from "node:util";
 import { compile } from "../../../src/permissions.js";
 
@@ -11,7 +18,8 @@ const FILE_TOOLS = new Set(["read", "edit", "write", "patch"]);
 /** Tools that change a file and therefore trigger the linter. */
 const MUTATING_TOOLS = new Set(["edit", "write", "patch"]);
 
-const LINTABLE = /\.(c|m)?js$|\.json$|\.md$/;
+// eslint.config.js covers only .js files, so other extensions are not linted.
+const LINTABLE = /\.js$/i;
 
 /** Same protected set as `permissions` and `policies` in opencode.json. */
 export const PROTECTED_PATHS = ["*.env", "*.env.*", "*secrets/*", "*.key", "*.pem"];
@@ -35,7 +43,17 @@ export function targetFiles(input) {
 
 function defaultExec(args, { cwd }) {
   const bin = join(cwd, "node_modules", "eslint", "bin", "eslint.js");
-  return execFileAsync(process.execPath, [bin, ...args], { cwd, windowsHide: true });
+  return execFileAsync(nodeBinary(), [bin, ...args], { cwd, windowsHide: true });
+}
+
+/**
+ * The OpenCode server is its own binary, so `process.execPath` is not Node:
+ * spawning it with a script argument runs the OpenCode CLI instead. Only reuse
+ * `execPath` when it really is Node, otherwise fall back to `node` on PATH.
+ */
+export function nodeBinary(execPath = process.execPath) {
+  const name = basename(execPath.replace(/\\/g, "/"));
+  return /^node(\.exe)?$/i.test(name) ? execPath : "node";
 }
 
 /**
@@ -75,7 +93,7 @@ export function createPlugin({ exec = defaultExec, cwd, onError } = {}) {
         if (files.length === 0) return undefined;
         queue = queue
           .then(() => lintFiles(files, root, exec))
-          .catch((error) => onError?.(error));
+          .catch((error) => (onError ?? reportError)(error));
         return queue;
       });
     },
@@ -86,6 +104,10 @@ async function lintFiles(files, root, exec) {
   for (const file of files) {
     await exec(["--fix", file], { cwd: root });
   }
+}
+
+function reportError(error) {
+  console.warn(`[lint-and-guard] eslint failed: ${error?.message ?? error}`);
 }
 
 export default createPlugin();

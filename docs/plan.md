@@ -10,4 +10,4 @@
 9. [x] Расширить e2e-сценарии: `*.key`, `*.pem`, `docs/.env`, `secrets/*`, приоритет правил (last-match-wins).
 10. [x] Перевести блокировку секретов на глоб-паттерны V2 (`permissions`) и добавить дублирующий hard-deny слой (`policies`).
 11. [x] Реализовать рабочий механизм автолинтера и блокировки в V2 — плагин `.opencode/plugins/lint-and-guard` (`tool.hook("execute.after")` / `tool.hook("execute.before")`); JSON-хуки удалены.
-12. [ ] Проверить загрузку плагина в живом OpenCode V2 (лог сервера, фактическое срабатывание хуков).
+12. [x] Проверить загрузку плагина в живом OpenCode V2: плагин `active` (`GET /api/plugin`), хуки срабатывают; найден и исправлен запуск линтера через `process.execPath` (это `opencode-cli.exe`, не Node).

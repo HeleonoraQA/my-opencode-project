@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from "vitest";
 import plugin, {
   createPlugin,
   isProtected,
+  nodeBinary,
   targetFiles,
 } from "../.opencode/plugins/lint-and-guard/index.js";
 
@@ -91,7 +92,7 @@ describe("plugin: protected path guard", () => {
 });
 
 describe("plugin: lint after edits", () => {
-  it.each(["src/app.js", "src/lib.mjs", "scripts/tool.cjs", "package.json", "README.md"])(
+  it.each(["src/app.js", "src/lib.js", "scripts/tool.js"])(
     "lints %s after a completed edit",
     async (file) => {
       const { hooks, exec } = await setupPlugin();
@@ -100,9 +101,11 @@ describe("plugin: lint after edits", () => {
     },
   );
 
-  it("skips non-lintable files", async () => {
+  it("skips files eslint does not cover", async () => {
     const { hooks, exec } = await setupPlugin();
-    await after(hooks, { tool: "edit", status: "completed", input: { filePath: "logo.png" } });
+    for (const file of ["logo.png", "package.json", "README.md", "src/lib.mjs"]) {
+      await after(hooks, { tool: "edit", status: "completed", input: { filePath: file } });
+    }
     expect(exec).not.toHaveBeenCalled();
   });
 
@@ -164,6 +167,22 @@ describe("plugin: lint after edits", () => {
       after(hooks, { tool: "edit", status: "completed", input: { filePath: "src/app.js" } }),
     ).resolves.toBeUndefined();
     expect(onError).toHaveBeenCalledOnce();
+  });
+});
+
+describe("plugin: node binary resolution", () => {
+  it("reuses execPath when it is Node", () => {
+    expect(nodeBinary("C:\\Program Files\\nodejs\\node.exe")).toBe(
+      "C:\\Program Files\\nodejs\\node.exe",
+    );
+    expect(nodeBinary("/usr/local/bin/node")).toBe("/usr/local/bin/node");
+  });
+
+  it("falls back to node on PATH for the OpenCode server binary", () => {
+    expect(
+      nodeBinary("C:\\Users\\Admin\\AppData\\Roaming\\ai.opencode.desktop\\cli\\2.0.31-x64\\opencode-cli.exe"),
+    ).toBe("node");
+    expect(nodeBinary("/usr/local/bin/bun")).toBe("node");
   });
 });
 
