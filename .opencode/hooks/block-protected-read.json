@@ -8,12 +8,6 @@
   },
   "filters": {
     "tools": ["read", "edit", "write", "patch"],
-    "paths": [
-      ".env",
-      ".env.*",
-      "secrets/*",
-      "*.key",
-      "*.pem"
-    ]
+    "paths": ["*.env", "*.env.*", "*secrets/*", "*.key", "*.pem"]
   }
 }

@@ -8,16 +8,7 @@
     "command": "npm run lint -- --fix"
   },
   "filters": {
-    "include": [
-      "**/*.js",
-      "**/*.mjs",
-      "**/*.cjs",
-      "**/*.json",
-      "**/*.md"
-    ],
-    "exclude": [
-      "node_modules/**",
-      ".git/**"
-    ]
+    "include": ["**/*.js", "**/*.mjs", "**/*.cjs", "**/*.json", "**/*.md"],
+    "exclude": ["node_modules/**", ".git/**"]
   }
 }

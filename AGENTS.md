@@ -11,7 +11,7 @@
   - `rules.md` — жёсткие правила проекта (подключены через `opencode.json`)
   - `src/permissions.js` — матчер прав доступа (last-match-wins, `*`/`?`)
   - `.opencode/skills/` — навыки агента (`lint`, `run-tests`)
-  - `.opencode/hooks/` — хуки OpenCode (автолинтер по `file.changed`, блокировка защищённых чтений/правок)
+  - `.opencode/hooks/` — описания хуков проекта (автолинтер, блокировка защищённых чтений/правок); в OpenCode V2 JSON-хуки не загружаются, реальные хуки регистрируются в плагинах (`ctx.tool.hook`)
   - `tests/` — тесты конфигурации, структуры и прав доступа
   - `docs/` — документация проекта (`plan.md`, `memory.md`, `about.md`)
   - `.husky/` — Git-хуки (`pre-commit`, `pre-push`, `commit-msg`)
@@ -39,7 +39,7 @@
 - **Реализация запрета (OpenCode V2):** глоб-паттерны в `permissions` — `*.env`, `*.env.*`, `*secrets/*`, `*.key`, `*.pem` для `read` и `edit` (в V2 `*` совпадает и с `/`, поэтому правило действует на любой вложенности; префикс `**/` не нужен и не покрывает корневой `.env`). Дополнительно тот же набор продублирован в `policies` как `tool.use` → `deny`: policy-запрет не перекрывается сохранёнными разрешениями «Allow always» и правилами агентов.
 - **Операции с файлами:** правка, создание и другие операции с файлами требуют подтверждения.
 - **Права shell:** по умолчанию любая команда требует подтверждения. Без подтверждения разрешены только `git *` (кроме `git push` — он всегда `ask`), `npm test`, `ls *`.
-- **Автоматические проверки:** `pre-commit` запускает только `npm run lint` (навык `lint` — автоматический). `pre-push` запускает `npm run lint && npm test`. GitHub Actions (`.github/workflows/ci.yml`) запускает `npm run lint && npm test` при `push` и `pull_request`. Соблюдение Conventional Commits проверяется хуком `commit-msg`. Дополнительно хук `.opencode/hooks/lint-on-file-changed.json` запускает линтер по событию `file.changed`, а хук `.opencode/hooks/block-protected-read.json` останавливает операции чтения/правки защищённых путей (`.env`, `.env.*`, `secrets/*`, `*.key`, `*.pem`).
+- **Автоматические проверки:** `pre-commit` запускает только `npm run lint` (навык `lint` — автоматический). `pre-push` запускает `npm run lint && npm test`. GitHub Actions (`.github/workflows/ci.yml`) запускает `npm run lint && npm test` при `push` и `pull_request`. Соблюдение Conventional Commits проверяется хуком `commit-msg`. Дополнительно есть описания хуков `.opencode/hooks/lint-on-file-changed.json` (автолинтер после изменения файла) и `.opencode/hooks/block-protected-read.json` (блокировка защищённых путей `.env`, `.env.*`, `secrets/*`, `*.key`, `*.pem`); это соглашения проекта — OpenCode V2 их не загружает, фактическая защита обеспечивается `permissions` + `policies`.
 - **Навыки:** `lint` — автоматический (запускается через хук `pre-commit` после редактирования), `run-tests` — ручной (вызывается только по команде пользователя).
 - **Безопасность:** никогда не коммитить секреты, ключи, `node_modules` и артефакты сборки.
 - **Изменения вне проекта:** не изменять файлы за пределами проекта.

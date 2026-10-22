@@ -17,6 +17,8 @@ describe("repository structure", () => {
     "docs/about.md",
     ".opencode/skills/run-tests/SKILL.md",
     ".opencode/skills/lint/SKILL.md",
+    ".opencode/hooks/lint-on-file-changed.json",
+    ".opencode/hooks/block-protected-read.json",
     ".husky/pre-commit",
     ".husky/pre-push",
     ".husky/commit-msg",
