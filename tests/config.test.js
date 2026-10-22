@@ -17,6 +17,11 @@ describe("opencode.json", () => {
     expect(config.instructions).toContain("rules.md");
   });
 
+  it("uses the V2 permissions array without the deprecated permission object", () => {
+    expect(Array.isArray(config.permissions)).toBe(true);
+    expect(config.permission).toBeUndefined();
+  });
+
   it("denies reading and editing .env files", () => {
     expect(config.permissions).toEqual(
       expect.arrayContaining([
@@ -27,6 +32,30 @@ describe("opencode.json", () => {
       ]),
     );
   });
+
+  it.each(["*.env", "*.env.*", "*secrets/*", "*.key", "*.pem"])(
+    "denies %s for read and edit at any depth",
+    (resource) => {
+      expect(config.permissions).toEqual(
+        expect.arrayContaining([
+          { action: "read", resource, effect: "deny" },
+          { action: "edit", resource, effect: "deny" },
+        ]),
+      );
+    },
+  );
+
+  it.each(["*.env", "*.env.*", "*secrets/*", "*.key", "*.pem"])(
+    "hard-denies %s through a tool.use policy",
+    (resource) => {
+      expect(config.policies).toEqual(
+        expect.arrayContaining([
+          { action: "tool.use", resource: `read:${resource}`, effect: "deny" },
+          { action: "tool.use", resource: `edit:${resource}`, effect: "deny" },
+        ]),
+      );
+    },
+  );
 
   it("asks before editing files", () => {
     expect(config.permissions).toContainEqual({

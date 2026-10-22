@@ -4,15 +4,13 @@
   "permissions": [
     { "action": "read", "resource": "*.env", "effect": "deny" },
     { "action": "read", "resource": "*.env.*", "effect": "deny" },
-    { "action": "read", "resource": "docs/.env", "effect": "deny" },
-    { "action": "read", "resource": "secrets/*", "effect": "deny" },
+    { "action": "read", "resource": "*secrets/*", "effect": "deny" },
     { "action": "read", "resource": "*.key", "effect": "deny" },
     { "action": "read", "resource": "*.pem", "effect": "deny" },
     { "action": "edit", "resource": "*", "effect": "ask" },
     { "action": "edit", "resource": "*.env", "effect": "deny" },
     { "action": "edit", "resource": "*.env.*", "effect": "deny" },
-    { "action": "edit", "resource": "docs/.env", "effect": "deny" },
-    { "action": "edit", "resource": "secrets/*", "effect": "deny" },
+    { "action": "edit", "resource": "*secrets/*", "effect": "deny" },
     { "action": "edit", "resource": "*.key", "effect": "deny" },
     { "action": "edit", "resource": "*.pem", "effect": "deny" },
     { "action": "shell", "resource": "*", "effect": "ask" },
@@ -20,5 +18,17 @@
     { "action": "shell", "resource": "git push", "effect": "ask" },
     { "action": "shell", "resource": "npm test", "effect": "allow" },
     { "action": "shell", "resource": "ls *", "effect": "allow" }
+  ],
+  "policies": [
+    { "action": "tool.use", "resource": "read:*.env", "effect": "deny" },
+    { "action": "tool.use", "resource": "read:*.env.*", "effect": "deny" },
+    { "action": "tool.use", "resource": "read:*secrets/*", "effect": "deny" },
+    { "action": "tool.use", "resource": "read:*.key", "effect": "deny" },
+    { "action": "tool.use", "resource": "read:*.pem", "effect": "deny" },
+    { "action": "tool.use", "resource": "edit:*.env", "effect": "deny" },
+    { "action": "tool.use", "resource": "edit:*.env.*", "effect": "deny" },
+    { "action": "tool.use", "resource": "edit:*secrets/*", "effect": "deny" },
+    { "action": "tool.use", "resource": "edit:*.key", "effect": "deny" },
+    { "action": "tool.use", "resource": "edit:*.pem", "effect": "deny" }
   ]
 }

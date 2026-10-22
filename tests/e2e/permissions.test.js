@@ -1,23 +1,33 @@
 import { describe, expect, it } from "vitest";
-import { evaluate, loadPermissions } from "../../src/permissions.js";
+import { evaluate, loadPermissions, loadPolicies } from "../../src/permissions.js";
 
 const rules = loadPermissions();
-const check = (action, resource) => evaluate(action, resource, rules);
+const policies = loadPolicies();
+const check = (action, resource) => evaluate(action, resource, rules, policies);
 
-describe("e2e: .env is fully blocked", () => {
-  it.each([".env", "config/.env", "nested/dir/.env", "secrets/db.env"])(
-    "denies reading %s",
-    (target) => {
-      expect(check("read", target)).toBe("deny");
-    },
-  );
+/** Protected paths at any nesting depth. */
+const PROTECTED_PATHS = [
+  ".env",
+  "app.env",
+  "config/.env",
+  "nested/dir/.env",
+  "secrets/db.env",
+  "app.env.local",
+  "nested/dir/.env.production",
+  "secrets/db.json",
+  "pkg/secrets/db.json",
+  "certs/server.key",
+  "certs/nested/server.pem",
+];
 
-  it.each([".env", "config/.env", "nested/dir/.env.production"])(
-    "denies editing %s",
-    (target) => {
-      expect(check("edit", target)).toBe("deny");
-    },
-  );
+describe("e2e: protected paths are denied at any depth", () => {
+  it.each(PROTECTED_PATHS)("denies reading %s", (target) => {
+    expect(check("read", target)).toBe("deny");
+  });
+
+  it.each(PROTECTED_PATHS)("denies editing %s", (target) => {
+    expect(check("edit", target)).toBe("deny");
+  });
 });
 
 describe("e2e: file edits require confirmation", () => {
@@ -67,5 +77,23 @@ describe("e2e: rule ordering (last match wins)", () => {
 
   it("negative: .env is not allowed for reads even though base allows reads", () => {
     expect(check("read", "config/.env")).not.toBe("allow");
+  });
+});
+
+describe("e2e: policy layer hard-denies protected paths", () => {
+  it("denies a read even when a later permission rule allows it", () => {
+    const permissive = [{ action: "read", resource: "*.env", effect: "allow" }];
+    expect(evaluate("read", ".env", permissive, policies)).toBe("deny");
+    expect(evaluate("read", "config/.env", permissive, policies)).toBe("deny");
+  });
+
+  it("denies an edit even when a later permission rule allows it", () => {
+    const permissive = [{ action: "edit", resource: "*.env", effect: "allow" }];
+    expect(evaluate("edit", ".env", permissive, policies)).toBe("deny");
+  });
+
+  it("keeps unrelated paths untouched", () => {
+    expect(evaluate("read", "README.md", [], policies)).not.toBe("deny");
+    expect(evaluate("edit", "src/permissions.js", [], policies)).not.toBe("deny");
   });
 });

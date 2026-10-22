@@ -7,7 +7,7 @@
 - **Суть проекта:** конфигурационный скелет для OpenCode. В репозитории нет прикладного исходного кода — только настройки агента, права доступа, навыки, тесты и документация.
 - **Стек:** Node.js (ESM), Vitest, ESLint, Husky, GitHub Actions
 - **Ключевые элементы:**
-  - `opencode.json` — конфигурация OpenCode V2 (`instructions`, `permissions`)
+  - `opencode.json` — конфигурация OpenCode V2 (`instructions`, `permissions`, `policies`)
   - `rules.md` — жёсткие правила проекта (подключены через `opencode.json`)
   - `src/permissions.js` — матчер прав доступа (last-match-wins, `*`/`?`)
   - `.opencode/skills/` — навыки агента (`lint`, `run-tests`)
@@ -36,6 +36,7 @@
 ## Правила работы
 
 - **Доступ к файлам:** `.env`, `.env.*`, `*.key`, `*.pem` и содержимое папки `secrets/` — полный запрет на чтение и изменение. Обойти нельзя. Перед любыми файловыми операциями необходимо проверять, не попадает ли путь под этот запрет.
+- **Реализация запрета (OpenCode V2):** глоб-паттерны в `permissions` — `*.env`, `*.env.*`, `*secrets/*`, `*.key`, `*.pem` для `read` и `edit` (в V2 `*` совпадает и с `/`, поэтому правило действует на любой вложенности; префикс `**/` не нужен и не покрывает корневой `.env`). Дополнительно тот же набор продублирован в `policies` как `tool.use` → `deny`: policy-запрет не перекрывается сохранёнными разрешениями «Allow always» и правилами агентов.
 - **Операции с файлами:** правка, создание и другие операции с файлами требуют подтверждения.
 - **Права shell:** по умолчанию любая команда требует подтверждения. Без подтверждения разрешены только `git *`, `npm test`, `ls *`.
 - **Автоматические проверки:** `pre-commit` запускает только `npm run lint` (навык `lint` — автоматический). `pre-push` запускает `npm run lint && npm test`. GitHub Actions (`.github/workflows/ci.yml`) запускает `npm run lint && npm test` при `push` и `pull_request`. Соблюдение Conventional Commits проверяется хуком `commit-msg`. Дополнительно хук `.opencode/hooks/lint-on-file-changed.json` запускает линтер по событию `file.changed`, а хук `.opencode/hooks/block-protected-read.json` останавливает операции чтения/правки защищённых путей (`.env`, `.env.*`, `secrets/*`, `*.key`, `*.pem`).
