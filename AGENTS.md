@@ -9,6 +9,7 @@
 - **Ключевые элементы:**
   - `opencode.json` — конфигурация OpenCode V2 (`instructions`, `permissions`, `policies`)
   - `rules.md` — жёсткие правила проекта (подключены через `opencode.json`)
+  - `calculator.html` — демо-страница калькулятора (одним файлом), UI проверяется через Playwright MCP
   - `src/permissions.js` — матчер прав доступа (last-match-wins, `*`/`?`)
   - `mcp.servers.playwright` в `opencode.json` — Playwright MCP (`npx @playwright/mcp`, Chrome headless, isolated); инструмент `playwright_browser_run_code_unsafe` запрещён
   - `.opencode/skills/` — навыки агента (`lint`, `run-tests`)

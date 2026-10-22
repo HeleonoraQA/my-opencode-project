@@ -15,6 +15,7 @@ describe("repository structure", () => {
     "docs/plan.md",
     "docs/memory.md",
     "docs/about.md",
+    "calculator.html",
     ".opencode/skills/run-tests/SKILL.md",
     ".opencode/skills/lint/SKILL.md",
     ".opencode/plugins/lint-and-guard/index.js",
@@ -24,6 +25,21 @@ describe("repository structure", () => {
     ".github/workflows/ci.yml",
   ])("includes %s", (relative) => {
     expect(existsSync(path(relative))).toBe(true);
+  });
+});
+
+describe("calculator page", () => {
+  const html = readFileSync(path("calculator.html"), "utf8");
+
+  it("renders a display and a 20-key keypad", () => {
+    expect(html).toContain('id="display"');
+    expect(html.match(/<button/g)).toHaveLength(20);
+  });
+
+  it("declares an inline favicon and no external assets", () => {
+    expect(html).toContain('rel="icon"');
+    expect(html).not.toMatch(/<script[^>]+src=/);
+    expect(html).not.toMatch(/<link[^>]+stylesheet/);
   });
 });
 

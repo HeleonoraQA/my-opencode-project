@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Калькулятор</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧮</text></svg>"
+    />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #0f1115;
+        --panel: #191d24;
+        --key: #232935;
+        --key-hover: #2c3442;
+        --accent: #4f8cff;
+        --accent-hover: #6ea0ff;
+        --text: #eef2f8;
+        --muted: #97a1b3;
+        --danger: #ff6b6b;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+        background: radial-gradient(circle at 20% 0%, #1b2433 0%, var(--bg) 55%);
+        color: var(--text);
+        font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      }
+
+      .calculator {
+        width: min(360px, 100%);
+        padding: 20px;
+        border-radius: 24px;
+        background: var(--panel);
+        box-shadow:
+          0 24px 60px rgb(0 0 0 / 45%),
+          inset 0 1px 0 rgb(255 255 255 / 6%);
+      }
+
+      .screen {
+        display: grid;
+        gap: 6px;
+        min-height: 108px;
+        padding: 16px;
+        margin-bottom: 16px;
+        border-radius: 16px;
+        background: #12161d;
+        text-align: right;
+      }
+
+      .expression {
+        min-height: 20px;
+        color: var(--muted);
+        font-size: 15px;
+        letter-spacing: 0.02em;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .display {
+        font-size: clamp(32px, 9vw, 44px);
+        font-weight: 600;
+        line-height: 1.1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .keys {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+      }
+
+      button {
+        appearance: none;
+        border: 0;
+        border-radius: 14px;
+        padding: 16px 0;
+        background: var(--key);
+        color: var(--text);
+        font: inherit;
+        font-size: 20px;
+        font-weight: 500;
+        cursor: pointer;
+        transition:
+          background-color 0.12s ease,
+          transform 0.06s ease;
+      }
+
+      button:hover {
+        background: var(--key-hover);
+      }
+
+      button:active {
+        transform: scale(0.97);
+      }
+
+      button:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
+
+      .key-function {
+        color: var(--muted);
+        font-size: 18px;
+      }
+
+      .key-operator,
+      .key-equals {
+        background: var(--accent);
+        color: #fff;
+      }
+
+      .key-operator:hover,
+      .key-equals:hover {
+        background: var(--accent-hover);
+      }
+
+      .key-clear {
+        color: var(--danger);
+      }
+
+      .key-equals {
+        grid-row: span 1;
+        font-size: 22px;
+      }
+
+      .key-wide {
+        grid-column: span 2;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="calculator" aria-label="Калькулятор">
+      <div class="screen">
+        <div class="expression" id="expression" data-testid="expression"></div>
+        <output class="display" id="display" data-testid="display" aria-live="polite">0</output>
+      </div>
+
+      <div class="keys">
+        <button type="button" class="key-function key-clear" data-action="clear" aria-label="Очистить">C</button>
+        <button type="button" class="key-function" data-action="backspace" aria-label="Удалить последний символ">←</button>
+        <button type="button" class="key-function" data-action="percent" aria-label="Процент">%</button>
+        <button type="button" class="key-operator" data-operator="/" aria-label="Деление">÷</button>
+
+        <button type="button" data-digit="7">7</button>
+        <button type="button" data-digit="8">8</button>
+        <button type="button" data-digit="9">9</button>
+        <button type="button" class="key-operator" data-operator="*" aria-label="Умножение">×</button>
+
+        <button type="button" data-digit="4">4</button>
+        <button type="button" data-digit="5">5</button>
+        <button type="button" data-digit="6">6</button>
+        <button type="button" class="key-operator" data-operator="-" aria-label="Вычитание">−</button>
+
+        <button type="button" data-digit="1">1</button>
+        <button type="button" data-digit="2">2</button>
+        <button type="button" data-digit="3">3</button>
+        <button type="button" class="key-operator" data-operator="+" aria-label="Сложение">+</button>
+
+        <button type="button" class="key-function" data-action="sign" aria-label="Сменить знак">±</button>
+        <button type="button" data-digit="0">0</button>
+        <button type="button" data-action="decimal" aria-label="Десятичная точка">,</button>
+        <button type="button" class="key-equals" data-action="equals" aria-label="Равно">=</button>
+      </div>
+    </main>
+
+    <script>
+      const display = document.getElementById("display");
+      const expression = document.getElementById("expression");
+
+      const OPERATOR_LABELS = { "+": "+", "-": "−", "*": "×", "/": "÷" };
+      const MAX_DIGITS = 12;
+
+      let current = "0";
+      let previous = null;
+      let operator = null;
+      let overwrite = false;
+
+      function format(value) {
+        if (!Number.isFinite(value)) return "Ошибка";
+        const rounded = Number.parseFloat(value.toPrecision(12));
+        if (Math.abs(rounded) >= 1e12 || (rounded !== 0 && Math.abs(rounded) < 1e-9)) {
+          return rounded.toExponential(6).replace("e", "e");
+        }
+        return String(rounded).replace(".", ",");
+      }
+
+      function render() {
+        display.textContent = current === "Ошибка" ? current : current.replace(".", ",");
+        expression.textContent =
+          previous === null || operator === null
+            ? ""
+            : `${format(previous)} ${OPERATOR_LABELS[operator]}`;
+        display.dataset.raw = current;
+      }
+
+      function inputDigit(digit) {
+        if (current === "Ошибка") current = "0";
+        if (overwrite) {
+          current = digit;
+          overwrite = false;
+        } else if (current === "0") {
+          current = digit;
+        } else if (current.replace(/[-.]/g, "").length < MAX_DIGITS) {
+          current += digit;
+        }
+        render();
+      }
+
+      function inputDecimal() {
+        if (current === "Ошибка") current = "0";
+        if (overwrite) {
+          current = "0";
+          overwrite = false;
+        }
+        if (!current.includes(".")) current += ".";
+        render();
+      }
+
+      function clearAll() {
+        current = "0";
+        previous = null;
+        operator = null;
+        overwrite = false;
+        render();
+      }
+
+      function backspace() {
+        if (current === "Ошибка" || overwrite) {
+          clearAll();
+          return;
+        }
+        current = current.length > 1 ? current.slice(0, -1) : "0";
+        if (current === "-") current = "0";
+        render();
+      }
+
+      function toggleSign() {
+        if (current === "Ошибка" || current === "0") return;
+        current = current.startsWith("-") ? current.slice(1) : `-${current}`;
+        render();
+      }
+
+      function percent() {
+        if (current === "Ошибка") return;
+        current = String(Number.parseFloat(current) / 100);
+        render();
+      }
+
+      function compute(left, right, op) {
+        switch (op) {
+          case "+":
+            return left + right;
+          case "-":
+            return left - right;
+          case "*":
+            return left * right;
+          case "/":
+            return right === 0 ? Number.NaN : left / right;
+          default:
+            return right;
+        }
+      }
+
+      function chooseOperator(nextOperator) {
+        if (current === "Ошибка") return;
+        const value = Number.parseFloat(current);
+        if (operator !== null && previous !== null && !overwrite) {
+          const result = compute(previous, value, operator);
+          current = format(result);
+          previous = result;
+        } else {
+          previous = value;
+        }
+        operator = nextOperator;
+        overwrite = true;
+        render();
+      }
+
+      function equals() {
+        if (operator === null || previous === null || current === "Ошибка") return;
+        const result = compute(previous, Number.parseFloat(current), operator);
+        expression.textContent = `${format(previous)} ${OPERATOR_LABELS[operator]} ${format(
+          Number.parseFloat(current),
+        )} =`;
+        current = format(result);
+        previous = null;
+        operator = null;
+        overwrite = true;
+        display.textContent = current;
+        display.dataset.raw = current;
+        return current;
+      }
+
+      const actions = {
+        clear: clearAll,
+        backspace,
+        sign: toggleSign,
+        percent,
+        decimal: inputDecimal,
+        equals,
+      };
+
+      document.querySelector(".keys").addEventListener("click", (event) => {
+        const button = event.target.closest("button");
+        if (!button) return;
+        if (button.dataset.digit !== undefined) inputDigit(button.dataset.digit);
+        else if (button.dataset.operator) chooseOperator(button.dataset.operator);
+        else if (button.dataset.action) actions[button.dataset.action]();
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.ctrlKey || event.metaKey || event.altKey) return;
+        const { key } = event;
+        if (/^[0-9]$/.test(key)) {
+          inputDigit(key);
+        } else if (key === "." || key === ",") {
+          inputDecimal();
+        } else if (["+", "-", "*", "/"].includes(key)) {
+          chooseOperator(key);
+        } else if (key === "Enter" || key === "=") {
+          event.preventDefault();
+          equals();
+        } else if (key === "Backspace") {
+          event.preventDefault();
+          backspace();
+        } else if (key === "Escape" || key.toLowerCase() === "c") {
+          clearAll();
+        } else if (key === "%") {
+          percent();
+        } else {
+          return;
+        }
+        event.preventDefault();
+      });
+
+      render();
+    </script>
+  </body>
+</html>
