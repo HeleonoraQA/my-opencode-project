@@ -11,6 +11,7 @@ export default defineConfig({
     channel: "chrome",
     headless: true,
     viewport: { width: 1280, height: 800 },
+    launchOptions: { slowMo: Number(process.env.PW_SLOW_MO ?? 0) },
   },
   webServer: {
     command: "node tests/ui/server.mjs",
