@@ -41,7 +41,7 @@
 - `tests/ui/server.mjs` — статический сервер проекта (без зависимостей): отдаёт `calculator.html` на `/`, проверяет путь на traversal.
 - `tests/ui/calculator.spec.js` — один сквозной сценарий: загрузка страницы, `9 ÷ 4 = 2,25`, `5 ÷ 0 → Ошибка`, `C → 0`, клавиатура `7*6 Enter = 42`, финал `12,5 × 4 = 50`; собирает `console`/`pageerror` и требует пустой список ошибок; сохраняет `docs/screenshots/e2e-calculator.png`.
 - Vitest не подхватывает UI-спеки: в `vitest.config.js` добавлен `exclude: tests/ui/**`; запуск — `npm run test:ui`.
-- Наблюдение за прогоном: `use.launchOptions.slowMo` берётся из `PW_SLOW_MO`, поэтому `$env:PW_SLOW_MO=700; npx playwright test tests/ui/calculator.spec.js --headed` открывает Chrome и выполняет шаги с паузами (~17 с).
+- Наблюдение за прогоном: `use.launchOptions.slowMo` берётся из `PW_SLOW_MO`, поэтому `$env:PW_SLOW_MO=700; npx playwright test tests/ui/calculator.spec.js --headed` открывает Chrome и выполняет шаги с паузами (~17 с). Скриншот лога этого прогона — `docs/screenshots/e2e-run.png`.
 - CI: шаг `npm run test:ui` после `npm test`.
 
 ## Навыки

@@ -32,6 +32,13 @@
 - `npm run test:ui` — UI e2e на Playwright Test (1 тест, Chrome)
 - `npm run test:watch` — тесты в режиме наблюдения
 
+## UI-проверки
+![Зелёный прогон UI e2e](docs/screenshots/e2e-run.png)
+
+Лог прогона `npm run test:ui` (headed, `PW_SLOW_MO=700`). Состояние интерфейса, снятое самим тестом:
+
+![Калькулятор после сценария](docs/screenshots/e2e-calculator.png)
+
 ## Документация
 - [`AGENTS.md`](AGENTS.md) — правила и рабочий процесс агента
 - [`rules.md`](rules.md) — жёсткие правила проекта
