@@ -73,4 +73,24 @@ describe("opencode.json", () => {
       .map((rule) => rule.resource);
     expect(allowed).toEqual(expect.arrayContaining(["git *", "npm test", "ls *"]));
   });
+
+  it("configures the Playwright MCP server as a local command", () => {
+    const server = config.mcp?.servers?.playwright;
+    expect(server).toMatchObject({ type: "local", cwd: "." });
+    expect(server.command.slice(0, 4)).toEqual([
+      "npx",
+      "-y",
+      "@playwright/mcp@latest",
+      "--browser",
+    ]);
+    expect(server.command).toContain("chrome");
+  });
+
+  it("denies the RCE-equivalent Playwright code tool", () => {
+    expect(config.permissions).toContainEqual({
+      action: "playwright_browser_run_code_unsafe",
+      resource: "*",
+      effect: "deny",
+    });
+  });
 });

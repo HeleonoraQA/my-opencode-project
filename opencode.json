@@ -18,7 +18,12 @@
     { "action": "shell", "resource": "git push", "effect": "ask" },
     { "action": "shell", "resource": "git push *", "effect": "ask" },
     { "action": "shell", "resource": "npm test", "effect": "allow" },
-    { "action": "shell", "resource": "ls *", "effect": "allow" }
+    { "action": "shell", "resource": "ls *", "effect": "allow" },
+    {
+      "action": "playwright_browser_run_code_unsafe",
+      "resource": "*",
+      "effect": "deny"
+    }
   ],
   "policies": [
     { "action": "tool.use", "resource": "read:*.env", "effect": "deny" },
@@ -31,5 +36,23 @@
     { "action": "tool.use", "resource": "edit:*secrets/*", "effect": "deny" },
     { "action": "tool.use", "resource": "edit:*.key", "effect": "deny" },
     { "action": "tool.use", "resource": "edit:*.pem", "effect": "deny" }
-  ]
+  ],
+  "mcp": {
+    "timeout": { "startup": 120000 },
+    "servers": {
+      "playwright": {
+        "type": "local",
+        "command": [
+          "npx",
+          "-y",
+          "@playwright/mcp@latest",
+          "--browser",
+          "chrome",
+          "--headless",
+          "--isolated"
+        ],
+        "cwd": "."
+      }
+    }
+  }
 }

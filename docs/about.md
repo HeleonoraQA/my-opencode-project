@@ -20,6 +20,14 @@
 - Дополнительно `husky pre-commit` запускает `npm run lint`, `pre-push` — `npm run lint && npm test`.
 - Ограничение: правки самого плагина подхватываются только в новой сессии OpenCode (или после перезапуска приложения) — горячая перезагрузка не восстанавливает хуки в открытой сессии.
 
+## MCP: Playwright
+- Сервер `playwright` в `opencode.json` → `mcp.servers`: локальный запуск `npx -y @playwright/mcp@latest --browser chrome --headless --isolated`.
+- Chrome — установленный в системе (`--browser chrome`), поэтому браузеры Playwright не скачиваются; `--headless` экономит ресурсы, `--isolated` не сохраняет профиль на диск.
+- `mcp.timeout.startup = 120000` — первый запуск `npx` скачивает пакет и не укладывается в стандартные 30 с.
+- Инструмент `playwright_browser_run_code_unsafe` (RCE-эквивалент) запрещён через `permissions` (`action: playwright_browser_run_code_unsafe` → `deny`).
+- Артефакты сессии (снимки accessibility-дерева) попадают в `.playwright-mcp/` — каталог в `.gitignore`.
+- Проверка: `opencode mcp list` → `✓ playwright connected`.
+
 ## Навыки
 - `lint` — автоматический (запускается через `pre-commit`).
 - `run-tests` — ручной, только по команде пользователя.
@@ -27,7 +35,7 @@
 ## Команды
 - `npm install` — установка зависимостей.
 - `npm run lint` — проверка ESLint.
-- `npm test` — все тесты (107: 16 config + 16 structure + 48 e2e + 27 plugins).
+- `npm test` — все тесты (109: 18 config + 16 structure + 48 e2e + 27 plugins).
 - `npm run test:e2e` — только e2e-тесты прав.
 - `npm run test:watch` — тесты в режиме наблюдения.
 

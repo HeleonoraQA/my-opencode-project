@@ -10,6 +10,7 @@
   - `opencode.json` — конфигурация OpenCode V2 (`instructions`, `permissions`, `policies`)
   - `rules.md` — жёсткие правила проекта (подключены через `opencode.json`)
   - `src/permissions.js` — матчер прав доступа (last-match-wins, `*`/`?`)
+  - `mcp.servers.playwright` в `opencode.json` — Playwright MCP (`npx @playwright/mcp`, Chrome headless, isolated); инструмент `playwright_browser_run_code_unsafe` запрещён
   - `.opencode/skills/` — навыки агента (`lint`, `run-tests`)
   - `.opencode/plugins/` — плагин V2 `lint-and-guard` (автолинтер в `tool.hook("execute.after")`, блокировка защищённых путей в `tool.hook("execute.before")`)
   - `tests/` — тесты конфигурации, структуры и прав доступа

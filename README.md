@@ -11,7 +11,8 @@
 ## Структура
 | Путь | Назначение |
 | --- | --- |
-| `opencode.json` | Конфигурация OpenCode V2: `instructions`, `permissions`, `policies` |
+| `opencode.json` | Конфигурация OpenCode V2: `instructions`, `permissions`, `policies`, `mcp` |
+| `mcp.servers.playwright` | Playwright MCP: Chrome headless, isolated-профиль, `browser_run_code_unsafe` запрещён |
 | `rules.md` | Жёсткие правила проекта (подключены через `instructions`) |
 | `src/permissions.js` | Матчер прав: last-match-wins, `*`/`?`, `loadPermissions`/`loadPolicies`/`evaluate` |
 | `.opencode/plugins/lint-and-guard/` | Плагин: `eslint --fix` после правок, блокировка защищённых путей |
@@ -23,7 +24,7 @@
 ## Команды
 - `npm install` — установка зависимостей
 - `npm run lint` — проверка ESLint
-- `npm test` — все тесты (107)
+- `npm test` — все тесты (109)
 - `npm run test:e2e` — только e2e-тесты прав
 - `npm run test:watch` — тесты в режиме наблюдения
 
