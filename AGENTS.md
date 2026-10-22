@@ -1,43 +1,42 @@
 # AGENTS.md
 
-## Repository state
+## Проект/стек
 
-OpenCode configuration scaffold for `https://github.com/HeleonoraQA/my-opencode-project.git`.
-There is no application source code yet — the repo holds agent configuration, docs, and a
-Node-based verification toolchain.
+- **Название проекта:** my-opencode-project
+- **Репозиторий:** https://github.com/HeleonoraQA/my-opencode-project.git
+- **Суть проекта:** конфигурационный скелет для OpenCode. В репозитории нет прикладного исходного кода — только настройки агента, права доступа, навыки, тесты и документация.
+- **Стек:** Node.js (ESM), Vitest, ESLint, Husky, GitHub Actions
+- **Ключевые элементы:**
+  - `opencode.json` — конфигурация OpenCode V2 (`instructions`, `permissions`)
+  - `rules.md` — жёсткие правила проекта (подключены через `opencode.json`)
+  - `src/permissions.js` — матчер прав доступа (last-match-wins, `*`/`?`)
+  - `.opencode/skills/` — навыки агента (`lint`, `run-tests`)
+  - `tests/` — тесты конфигурации, структуры и прав доступа
+  - `docs/` — документация проекта (`plan.md`, `memory.md`, `about.md`)
+  - `.husky/` — Git-хуки (`pre-commit`, `pre-push`, `commit-msg`)
+  - `.github/workflows/ci.yml` — проверка в GitHub Actions
 
-Layout:
+## Команды
 
-- `AGENTS.md` — this file
-- `README.md` — project overview and agent workflow
-- `rules.md` — hard project rules, loaded via `opencode.json` `instructions`
-- `opencode.json` — OpenCode V2 configuration (`instructions` + `permissions` rules)
-- `docs/` — `plan.md`, `memory.md`, `about.md`
-- `.opencode/skills/` — `run-tests/SKILL.md`, `lint/SKILL.md`
-- `src/permissions.js` — OpenCode `permissions` matcher (last-match-wins, `*`/`?` globs)
-- `tests/` — Vitest suites: `config.test.js`, `structure.test.js`, `e2e/permissions.test.js`
-- `eslint.config.js`, `package.json`, `package-lock.json` — toolchain
-- `.husky/pre-commit` — runs `npm run lint && npm test` on every commit
-- `.husky/pre-push` — runs `npm run lint && npm test` before push
-- `.husky/commit-msg` — enforces Conventional Commits (`type(scope): summary`)
-- `.github/workflows/ci.yml` — GitHub Actions: lint + test on push/PR
-- `node_modules/` — installed deps, git-ignored (never edit by hand)
+- Установка зависимостей: `npm install`
+- Запуск всех тестов: `npm test`
+- Запуск e2e-тестов: `npm run test:e2e`
+- Запуск тестов в режиме наблюдения: `npm run test:watch`
+- Проверка линтером: `npm run lint`
+- Исправление ошибок линтером: `npm run lint -- --fix`
 
-## Commands
+## Конвенции
 
-- Install deps: `npm install`
-- Run tests once: `npm test` (Vitest)
-- Run e2e tests only: `npm run test:e2e`
-- Watch tests: `npm run test:watch`
-- Lint: `npm run lint`
-- Lint and autofix: `npm run lint -- --fix`
+- **Сообщения коммитов:** соблюдать Conventional Commits — `type(scope): summary`. Допустимые типы: `feat`, `fix`, `docs`, `chore`, `refactor`, `test`, `ci`, `build`, `perf`, `style`. Исключения: `Merge`, `Revert`.
+- **Стиль кода:** использовать ESM. Код проверяется `eslint` по правилам `no-unused-vars` и `no-undef`.
+- **Тестирование:** при изменении конфигурации, документации или тестов обязательно запускать `npm run lint` и `npm test`.
+- **Документация:** при изменении правил, прав доступа или структуры проекта обновлять `AGENTS.md` и `docs/memory.md`.
 
-After changing config, docs, or tests, run `npm run lint` and `npm test`.
+## Правила работы
 
-Both also run automatically: a husky `pre-commit` hook blocks commits that fail them,
-and GitHub Actions (`.github/workflows/ci.yml`) runs them on every push and PR.
-Commit messages must follow Conventional Commits (`type(scope): summary`), enforced by `.husky/commit-msg`.
-
-## Правила безопасности
-- Никогда не читать и не изменять файлы `.env` или `.env.*` (запрет задан в `opencode.json`).
-- Перед выполнением любых операций с файлами проверять, не попадает ли путь под запрет.
+- **Доступ к файлам:** `.env` и `.env.*` — полный запрет на чтение и изменение. Обойти нельзя. Перед любыми файловыми операциями необходимо проверять, не попадает ли путь под этот запрет.
+- **Операции с файлами:** правка, создание и другие операции с файлами требуют подтверждения.
+- **Права shell:** по умолчанию любая команда требует подтверждения. Без подтверждения разрешены только `git *`, `npm test`, `ls *`.
+- **Автоматические проверки:** `pre-commit` и `pre-push` запускают `npm run lint && npm test`. GitHub Actions также запускает их при `push` и `pull_request`. Соблюдение Conventional Commits проверяется хуком `commit-msg`.
+- **Безопасность:** никогда не коммитить секреты, ключи, `node_modules` и артефакты сборки.
+- **Изменения вне проекта:** не изменять файлы за пределами проекта без явной необходимости.
