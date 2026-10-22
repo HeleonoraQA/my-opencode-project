@@ -1,0 +1,19 @@
+﻿{
+  "name": "block-protected-read",
+  "description": "Блокировка доступа к защищённым файлам",
+  "event": "tool.before.*",
+  "enabled": true,
+  "action": {
+    "type": "stop"
+  },
+  "filters": {
+    "tools": ["read", "edit", "write", "patch"],
+    "paths": [
+      ".env",
+      ".env.*",
+      "secrets/*",
+      "*.key",
+      "*.pem"
+    ]
+  }
+}
