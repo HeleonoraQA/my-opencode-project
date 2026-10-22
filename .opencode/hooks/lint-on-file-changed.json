@@ -1,0 +1,23 @@
+﻿{
+  "name": "auto-lint-after-edit",
+  "description": "Автоматический линтер после редактирования",
+  "event": "file.changed",
+  "enabled": true,
+  "action": {
+    "type": "shell",
+    "command": "npm run lint -- --fix"
+  },
+  "filters": {
+    "include": [
+      "**/*.js",
+      "**/*.mjs",
+      "**/*.cjs",
+      "**/*.json",
+      "**/*.md"
+    ],
+    "exclude": [
+      "node_modules/**",
+      ".git/**"
+    ]
+  }
+}
