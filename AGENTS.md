@@ -11,6 +11,7 @@
   - `rules.md` — жёсткие правила проекта (подключены через `opencode.json`)
   - `src/permissions.js` — матчер прав доступа (last-match-wins, `*`/`?`)
   - `.opencode/skills/` — навыки агента (`lint`, `run-tests`)
+  - `.opencode/hooks/` — хуки OpenCode (автолинтер по `file.changed`, блокировка защищённых чтений/правок)
   - `tests/` — тесты конфигурации, структуры и прав доступа
   - `docs/` — документация проекта (`plan.md`, `memory.md`, `about.md`)
   - `.husky/` — Git-хуки (`pre-commit`, `pre-push`, `commit-msg`)
@@ -37,7 +38,7 @@
 - **Доступ к файлам:** `.env`, `.env.*`, `*.key`, `*.pem` и содержимое папки `secrets/` — полный запрет на чтение и изменение. Обойти нельзя. Перед любыми файловыми операциями необходимо проверять, не попадает ли путь под этот запрет.
 - **Операции с файлами:** правка, создание и другие операции с файлами требуют подтверждения.
 - **Права shell:** по умолчанию любая команда требует подтверждения. Без подтверждения разрешены только `git *`, `npm test`, `ls *`.
-- **Автоматические проверки:** `pre-commit` запускает только `npm run lint` (навык `lint` — автоматический). `pre-push` запускает `npm run lint && npm test`. GitHub Actions (`.github/workflows/ci.yml`) запускает `npm run lint && npm test` при `push` и `pull_request`. Соблюдение Conventional Commits проверяется хуком `commit-msg`.
+- **Автоматические проверки:** `pre-commit` запускает только `npm run lint` (навык `lint` — автоматический). `pre-push` запускает `npm run lint && npm test`. GitHub Actions (`.github/workflows/ci.yml`) запускает `npm run lint && npm test` при `push` и `pull_request`. Соблюдение Conventional Commits проверяется хуком `commit-msg`. Дополнительно хук `.opencode/hooks/lint-on-file-changed.json` запускает линтер по событию `file.changed`, а хук `.opencode/hooks/block-protected-read.json` останавливает операции чтения/правки защищённых путей (`.env`, `.env.*`, `secrets/*`, `*.key`, `*.pem`).
 - **Навыки:** `lint` — автоматический (запускается через хук `pre-commit` после редактирования), `run-tests` — ручной (вызывается только по команде пользователя).
 - **Безопасность:** никогда не коммитить секреты, ключи, `node_modules` и артефакты сборки.
 - **Изменения вне проекта:** не изменять файлы за пределами проекта.

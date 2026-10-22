@@ -8,4 +8,10 @@
 - [2026-10-18] Добавлены e2e-тесты прав (`tests/e2e/permissions.test.js`) и матчер `src/permissions.js`; всего 42 теста.
 - [2026-10-18] Автоматизация проверок: GitHub Actions CI (lint + test) и husky pre-commit-хук.
 - [2026-10-18] Добавлены `rules.md` (подключён через `instructions`) и хуки `pre-push` + `commit-msg` (Conventional Commits).
-- Следующий шаг: расширять покрытие e2e-сценариев и поддерживать их прохождение.
+- [2026-10-22] Добавлены path-scoped запреты в `opencode.json`: `docs/.env` и `secrets/*` (`read`/`edit` → `deny`); эксперимент зафиксирован в `docs/screenshots/path-scoped-permissions-experiment.txt`.
+- [2026-10-22] Навыки разделены: `lint` — автоматический (запуск через husky `pre-commit`), `run-tests` — ручной (только по команде пользователя).
+- [2026-10-22] Добавлен хук `.opencode/hooks/lint-on-file-changed.json`: событие `file.changed` → `npm run lint -- --fix`.
+- [2026-10-22] Добавлен хук `.opencode/hooks/block-protected-read.json`: событие `tool.before.*` + фильтр `paths` → `stop` для `.env`, `.env.*`, `secrets/*`, `*.key`, `*.pem`.
+- [2026-10-22] Обновлён `AGENTS.md` под текущие правила (автоматические проверки, разделение навыков, защищённые пути).
+- Текущее состояние: 48 тестов проходят (5 config + 15 structure + 28 e2e), рабочее дерево чистое.
+- Следующий шаг: покрыть хуки `.opencode/hooks/*` тестами структуры и проверить фактическую поддержку `tool.before.*`/`filters.paths` в OpenCode V2.
