@@ -9,4 +9,5 @@
 8. [x] Проверить фактическую поддержку `tool.before.*` и `filters.paths` в OpenCode V2: JSON-хуки в V2 не поддерживаются (только плагины), описания хуков переведены в статус соглашений проекта.
 9. [x] Расширить e2e-сценарии: `*.key`, `*.pem`, `docs/.env`, `secrets/*`, приоритет правил (last-match-wins).
 10. [x] Перевести блокировку секретов на глоб-паттерны V2 (`permissions`) и добавить дублирующий hard-deny слой (`policies`).
-11. [ ] Реализовать рабочий механизм автолинтера и блокировки в V2 — плагин `.opencode/plugins/` (`ctx.tool.hook("execute.after")` / `ctx.tool.hook("execute.before")`).
+11. [x] Реализовать рабочий механизм автолинтера и блокировки в V2 — плагин `.opencode/plugins/lint-and-guard` (`tool.hook("execute.after")` / `tool.hook("execute.before")`); JSON-хуки удалены.
+12. [ ] Проверить загрузку плагина в живом OpenCode V2 (лог сервера, фактическое срабатывание хуков).
