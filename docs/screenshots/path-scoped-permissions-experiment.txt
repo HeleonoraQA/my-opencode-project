@@ -1,0 +1,15 @@
+﻿Эксперимент по path-scoped ограничению путей
+Дата: 2026-10-22
+
+Проверка evaluate() из src/permissions.js с правилами из opencode.json
+
+Результаты:
+- edit docs/.env                -> deny
+- read docs/.env                -> deny
+- edit secrets/id_rsa           -> deny
+- read secrets/config.json      -> deny
+- edit .env                     -> deny
+- read .env                     -> deny
+
+Вывод: path-scoped правила docs/.env и secrets/* работают корректно.
+Глобальный deny для *.env также сохраняет полный запрет.
