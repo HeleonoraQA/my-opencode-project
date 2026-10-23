@@ -71,7 +71,9 @@ describe("opencode.json", () => {
     const allowed = shell
       .filter((rule) => rule.effect === "allow")
       .map((rule) => rule.resource);
-    expect(allowed).toEqual(expect.arrayContaining(["git *", "npm test", "ls *"]));
+    expect(allowed).toEqual(
+      expect.arrayContaining(["git *", "npm test", "npm run lint", "ls *"]),
+    );
   });
 
   it("configures the Playwright MCP server as a local command", () => {

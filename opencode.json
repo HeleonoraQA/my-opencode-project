@@ -18,6 +18,7 @@
     { "action": "shell", "resource": "git push", "effect": "ask" },
     { "action": "shell", "resource": "git push *", "effect": "ask" },
     { "action": "shell", "resource": "npm test", "effect": "allow" },
+    { "action": "shell", "resource": "npm run lint", "effect": "allow" },
     { "action": "shell", "resource": "ls *", "effect": "allow" },
     {
       "action": "playwright_browser_run_code_unsafe",

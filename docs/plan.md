@@ -16,3 +16,4 @@
 15. [x] Написан демо-калькулятор `calculator.html` и проверен UI через Playwright MCP: сценарии арифметики, процентов, деления на 0, backspace и клавиатуры; скриншоты desktop/mobile; консоль без ошибок.
 16. [x] Добавлен зелёный UI e2e на Playwright Test: `tests/ui/calculator.spec.js` + `tests/ui/server.mjs` + `playwright.config.js` (Chrome channel, webServer), `npm run test:ui`, скриншот `docs/screenshots/e2e-calculator.png`, шаг в CI; Vitest исключает `tests/ui/**`.
 17. [x] Вшить в `docs/about.md` четыре скриншота проверок с подписями: блокировка `.env`, срабатывание линтера, продолжение работы по памяти, зелёный UI e2e.
+18. [x] Разрешить `npm run lint` без подтверждения: точное правило `shell` → `allow` (варианты с `--fix` и цепочки команд остаются `ask`).

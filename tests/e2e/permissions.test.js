@@ -54,6 +54,7 @@ describe("e2e: shell policy", () => {
     "git status --short",
     "git fetch",
     "npm test",
+    "npm run lint",
     "ls",
     "ls -la",
   ])("allows safe command: %s", (command) => {
@@ -65,6 +66,8 @@ describe("e2e: shell policy", () => {
     "npm install",
     "curl http://example.com",
     "node script.js",
+    "npm run lint -- --fix",
+    "npm run lint && rm -rf build",
   ])("asks before command: %s", (command) => {
     expect(check("shell", command)).toBe("ask");
   });

@@ -51,7 +51,7 @@
 ## Команды
 - `npm install` — установка зависимостей.
 - `npm run lint` — проверка ESLint.
-- `npm test` — все тесты (116: 18 config + 23 structure + 48 e2e + 27 plugins).
+- `npm test` — все тесты (119: 18 config + 23 structure + 51 e2e + 27 plugins).
 - `npm run test:e2e` — только e2e-тесты прав.
 - `npm run test:ui` — UI e2e на Playwright Test (1 тест, Chrome channel).
 - `npm run test:watch` — тесты в режиме наблюдения.
