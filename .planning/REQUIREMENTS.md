@@ -9,10 +9,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Footer (about-line)
 
-- [ ] **FOOTER-01**: Пользователь видит в подвале калькулятора строку «Калькулятор v1.0.0» — семантический `<footer data-testid="about-line">` как последний дочерний элемент внутри `<main class="calculator">`, версия отражена в видимом тексте и в машиночитаемом атрибуте (`data-version`)
-- [ ] **FOOTER-02**: Структурный тест в `tests/structure.test.js` гарантирует: футер существует, `<footer>` ровно один, текст соответствует формату «Калькулятор vX.Y.Z», версия синхронизирована с `package.json` (ожидание вычисляется через `readFileSync`, не хардкодится)
-- [ ] **FOOTER-03**: UI e2e в `tests/ui/calculator.spec.js` подтверждает реальный рендер: `getByTestId("about-line")` видим и содержит актуальную версию; JS калькулятора не изменяется
-- [ ] **FOOTER-04**: Скриншот `docs/screenshots/e2e-calculator.png` перегенерирован и закоммичен в коммите фичи как плановый артефакт
+- [x] **FOOTER-01**: Пользователь видит в подвале калькулятора строку «Калькулятор v1.0.0» — семантический `<footer data-testid="about-line">` как последний дочерний элемент внутри `<main class="calculator">`, версия отражена в видимом тексте и в машиночитаемом атрибуте (`data-version`)
+- [x] **FOOTER-02**: Структурный тест в `tests/structure.test.js` гарантирует: футер существует, `<footer>` ровно один, текст соответствует формату «Калькулятор vX.Y.Z», версия синхронизирована с `package.json` (ожидание вычисляется через `readFileSync`, не хардкодится)
+- [x] **FOOTER-03**: UI e2e в `tests/ui/calculator.spec.js` подтверждает реальный рендер: `getByTestId("about-line")` видим и содержит актуальную версию; JS калькулятора не изменяется
+- [x] **FOOTER-04**: Скриншот `docs/screenshots/e2e-calculator.png` перегенерирован и закоммичен в коммите фичи как плановый артефакт
 
 ### Docs
 
@@ -48,10 +48,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FOOTER-01 | Phase 1 | Pending |
-| FOOTER-02 | Phase 1 | Pending |
-| FOOTER-03 | Phase 1 | Pending |
-| FOOTER-04 | Phase 1 | Pending |
+| FOOTER-01 | Phase 1 | Complete |
+| FOOTER-02 | Phase 1 | Complete |
+| FOOTER-03 | Phase 1 | Complete |
+| FOOTER-04 | Phase 1 | Complete |
 | DOCS-01 | Phase 2 | Pending |
 | DOCS-02 | Phase 2 | Pending |
 | DOCS-03 | Phase 2 | Pending |

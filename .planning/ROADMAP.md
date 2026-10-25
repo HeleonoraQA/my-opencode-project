@@ -16,6 +16,7 @@
 ## Phase Details
 
 ### Phase 1: About-line footer + two-layer tests
+
 **Goal:** Пользователь видит в подвале калькулятора строку «Калькулятор v1.0.0», корректность разметки и рендера гарантирована тестами на обоих слоях (структурный + реальный браузер), артефакт скриншота закоммичен.
 **Mode:** mvp
 **Depends on**: Nothing (first phase)
@@ -25,15 +26,17 @@
   2. Структурный тест в `tests/structure.test.js` проходит: футер существует и единственный, текст соответствует формату «Калькулятор vX.Y.Z», ожидаемая версия вычисляется из `readFileSync` `package.json` (не хардкод)
   3. UI e2e в `tests/ui/calculator.spec.js` проходит: `getByTestId("about-line")` видим и содержит актуальную версию; JS калькулятора не изменён; центрированный body-grid не сломан
   4. `npm run lint`, `npm test` и `npm run test:ui` — зелёные; скриншот `docs/screenshots/e2e-calculator.png` перегенерирован и включён в коммит фичи
-**Plans**: TBD
+
+**Plans**: 1/1 plans executed
 
 Plans:
-- [ ] 01-01: TBD (заполняется при `/gsd-plan-phase 1`)
+- [x] 01-01: TBD (заполняется при `/gsd-plan-phase 1`)
 - [ ] 01-02: TBD (заполняется при `/gsd-plan-phase 1`)
 
 **UI hint**: yes
 
 ### Phase 2: Documentation sync
+
 **Mode:** mvp
 **Goal:** Документация репозитория соответствует новой фиче: о about-line можно узнать из README и `docs/about.md`, счётчики тестов в `AGENTS.md` актуальны, в `docs/memory.md` записаны наблюдения о GSD-цикле.
 **Depends on**: Phase 1
@@ -42,6 +45,7 @@ Plans:
   1. README упоминает about-line и способ проверки (`npm run test:ui`) — человек, открывший репозиторий, понимает фичу и как её прогнать
   2. `docs/about.md` описывает about-line, а счётчики тестов в `AGENTS.md` совпадают с фактическим их числом после Phase 1
   3. В `docs/memory.md` есть раздел с наблюдениями о GSD-цикле (что удобно/неудобно, где дублирует AGENTS.md)
+
 **Plans**: TBD
 
 Plans:
@@ -54,5 +58,5 @@ Phases execute in numeric order: 1 → 2
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. About-line footer + two-layer tests | 0/2 | Not started | - |
+| 1. About-line footer + two-layer tests | 1/1 | In Progress | - |
 | 2. Documentation sync | 0/1 | Not started | - |
