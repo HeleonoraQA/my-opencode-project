@@ -50,6 +50,27 @@ describe("calculator page", () => {
     expect(html).toContain('data-testid="about-line"');
     expect(html.match(/<footer\b/g)).toHaveLength(1);
   });
+
+  it("about-line version is synchronized with package.json", () => {
+    const pkg = JSON.parse(readFileSync(path("package.json"), "utf8"));
+    expect(html).toContain(`Калькулятор v${pkg.version}`);
+    expect(html).toContain(`data-version="${pkg.version}"`);
+  });
+
+  it("about-line version has semver format", () => {
+    expect(html).toMatch(/data-version="\d+\.\d+\.\d+"/);
+    const footer = html.match(/<footer[\s\S]*?<\/footer>/)[0];
+    expect(footer).toMatch(/Калькулятор v\d+\.\d+\.\d+/);
+  });
+
+  it("about-line footer is last child of main and non-interactive", () => {
+    const footer = html.match(/<footer[\s\S]*?<\/footer>/)[0];
+    expect(footer).not.toMatch(/<a\b|<button\b|tabindex/i);
+
+    const footerEnd = html.indexOf("</footer>") + "</footer>".length;
+    const mainEnd = html.lastIndexOf("</main>");
+    expect(html.slice(footerEnd, mainEnd).trim()).toBe("");
+  });
 });
 
 describe("agent skills", () => {
