@@ -1,4 +1,11 @@
+import { readFileSync } from "node:fs";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
 import { expect, test } from "@playwright/test";
+
+const pkgVersion = JSON.parse(
+  readFileSync(join(dirname(fileURLToPath(import.meta.url)), "..", "..", "package.json"), "utf8"),
+).version;
 
 test("calculator: arithmetic, errors and keyboard stay green", async ({ page }) => {
   const consoleErrors = [];
@@ -16,6 +23,8 @@ test("calculator: arithmetic, errors and keyboard stay green", async ({ page }) 
   await expect(display).toHaveText("0");
   const about = page.getByTestId("about-line");
   await expect(about).toBeVisible();
+  await expect(about).toContainText(`Калькулятор v${pkgVersion}`);
+  await expect(about).toHaveAttribute("data-version", pkgVersion);
 
   // Дроби и округление: 9 ÷ 4 = 2,25
   await key("9");
