@@ -25,7 +25,7 @@ progress:
 See: .planning/PROJECT.md (updated 2026-10-25)
 
 **Core value:** Пройти полный GSD-цикл без риска для конфигурации репозитория: изолированная мини-фича (about-line в подвале калькулятора) с проверками в тестах и обновлением документации.
-**Current focus:** Phase 02 — Documentation sync
+**Current focus:** Milestone v1.0.0 — все фазы complete; финальный отчёт эксперимента GSD
 
 ## Current Position
 
@@ -96,6 +96,6 @@ Items acknowledged and deferred at milestone close, most recent first:
 
 ## Session Continuity
 
-Last session: 2026-10-25T13:53:30.000Z
-Stopped at: Phase 02 complete — all phases complete
+Last session: 2026-10-25
+Stopped at: Milestone v1.0.0 — Phase 02 complete; код-ревью (2 fixes), security review (threats_open 0), UAT 6/6 passed
 Resume file: None

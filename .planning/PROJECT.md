@@ -15,14 +15,23 @@
 - ✓ Демо-калькулятор `calculator.html` с UI e2e на Playwright — existing
 - ✓ Три слоя защиты секретов (`permissions` + `policies` + плагин) — existing
 - ✓ CI (lint + test + test:ui) и husky-хуки — existing
+- ✓ About-line в подвале `calculator.html` (footer, data-version) — Phase 1
+- ✓ Структурный тест на about-line (4 it + WR-01 guard) — Phase 1
+- ✓ UI e2e-проверка видимости about-line — Phase 1
+- ✓ Обновление README / `docs/about.md` / счётчики `AGENTS.md` — Phase 2
+- ✓ Заметки-наблюдения об GSD-цикле в `docs/memory.md` — Phase 2
 
 ### Active
 
-- [ ] About-line в подвале `calculator.html`: имя приложения + версия (фаза 1)
-- [ ] Структурный тест на наличие about-line в разметке (фаза 1)
-- [ ] UI e2e-проверка видимости about-line (фаза 1)
-- [ ] Обновление README/docs (about, memory) с упоминанием фичи (фаза 2)
-- [ ] Заметки-наблюдения об GSD-цикле в `docs/memory.md` (фаза 2)
+- [ ] Бэклог-напоминания из тестов GSD (см. STATE.md → Accumulated Context) — после закрытия эксперимента
+
+<!-- Was (фазы 1–2, обе → Validate завершёны):
+- [ ] About-line в подвале calculator.html (фаза 1)
+- [ ] Структурный тест (фаза 1)
+- [ ] UI e2e-проверка (фаза 1)
+- [ ] Обновление README/docs (фаза 2)
+- [ ] Заметки-наблюдения GSD (фаза 2)
+-->
 
 ### Out of Scope
 
@@ -35,7 +44,7 @@
 
 - Репозиторий — конфигурационный скелет, прикладного кода нет, кроме `calculator.html` (один файл HTML+CSS+JS)
 - Карта кодовой базы уже снята GSD: `.planning/codebase/` (7 документов)
-- Тестовая база: 119 тестов Vitest (18 config + 23 structure + 51 e2e + 27 plugins) + 1 UI e2e Playwright
+- Тестовая база: 123 теста Vitest (18 config + 27 structure + 51 e2e + 27 plugins) + 1 UI e2e Playwright
 - Пользователь впервые пробует GSD; ожидается полный цикл (`/gsd-new-project` → `/gsd-plan-phase` → `/gsd-execute-phase`) и наблюдения
 
 ## Constraints
@@ -49,9 +58,10 @@
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Учебная задача («about-line») вместо реального бэклога | Изоляция: фича не задевает конфиг/права, легко проверить тестами | — Pending |
-| 2 фазы (фича, документация) | Полный цикл из нескольких фаз в мини-объёме | — Pending |
-| Наблюдения складывать в `docs/memory.md` | Требование конвенции репозитория — пользовательский журнал | — Pending |
+| Учебная задача («about-line») вместо реального бэклога | Изоляция: фича не задевает конфиг/права, легко проверить тестами | ✓ Реализована в Phase 1, verify passed |
+| 2 фазы (фича, документация) | Полный цикл из нескольких фаз в мини-объёме | ✓ Обе фазы complete (2026-10-25) |
+| Наблюдения складывать в `docs/memory.md` | Требование конвенции репозитория — пользовательский журнал | ✓ Phase 2: раздел «GSD-цикл (эксперимент)» |
+| Динамический counter-gate вместо зашитых литералов | Против главного дрейфа «119/23» — парсит живой npm test сверяет все 3 дока | ✓ Заложен Phase 2 PLAN, воспроизведён verifer'ом |
 
 ---
-*Last updated: 2026-10-25 after initialization*
+*Last updated: 2026-10-25 after Phase 2*
