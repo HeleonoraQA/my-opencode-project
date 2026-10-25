@@ -15,7 +15,7 @@
 | `mcp.servers.playwright` | Playwright MCP: Chrome headless, isolated-профиль, `browser_run_code_unsafe` запрещён |
 | `rules.md` | Жёсткие правила проекта (подключены через `instructions`) |
 | `src/permissions.js` | Матчер прав: last-match-wins, `*`/`?`, `loadPermissions`/`loadPolicies`/`evaluate` |
-| `calculator.html` | Демо-калькулятор (HTML/CSS/JS в одном файле) для проверки UI через Playwright MCP |
+| `calculator.html` | Демо-калькулятор (HTML/CSS/JS в одном файле); в подвале `<main class="calculator">` строка about-line `<footer data-testid="about-line">Калькулятор v1.0.0</footer>` (версия дублируется в `data-version`); UI проверяется через Playwright MCP |
 | `.opencode/plugins/lint-and-guard/` | Плагин: `eslint --fix` после правок, блокировка защищённых путей |
 | `.opencode/skills/` | Навыки агента: `lint` (автоматический), `run-tests` (ручной) |
 | `tests/` | Тесты конфигурации, структуры, прав и плагина (Vitest) |
@@ -27,12 +27,14 @@
 ## Команды
 - `npm install` — установка зависимостей
 - `npm run lint` — проверка ESLint
-- `npm test` — все тесты (119)
+- `npm test` — все тесты (123)
 - `npm run test:e2e` — только e2e-тесты прав
 - `npm run test:ui` — UI e2e на Playwright Test (1 тест, Chrome)
 - `npm run test:watch` — тесты в режиме наблюдения
 
 ## UI-проверки
+В подвале калькулятора видна строка about-line «Калькулятор v1.0.0» (`<footer data-testid="about-line" data-version="1.0.0">`, последний ребёнок `<main`). Её фиксируют оба тестовых слоя: структурный тест Vitest считает ожидаемую версию из `package.json`, а UI e2e (Playwright) проверяет видимость строки через `getByTestId("about-line")`. Проверить можно запуском `npm run test:ui`.
+
 ![Зелёный прогон UI e2e](docs/screenshots/e2e-run.png)
 
 Лог прогона `npm run test:ui` (headed, `PW_SLOW_MO=700`). Состояние интерфейса, снятое самим тестом:
