@@ -69,6 +69,7 @@ describe("calculator page", () => {
 
     const footerEnd = html.indexOf("</footer>") + "</footer>".length;
     const mainEnd = html.lastIndexOf("</main>");
+    expect(footerEnd).toBeLessThan(mainEnd); // footer находится ВНУТРИ <main>
     expect(html.slice(footerEnd, mainEnd).trim()).toBe("");
   });
 });
