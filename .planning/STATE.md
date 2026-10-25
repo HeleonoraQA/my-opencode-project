@@ -2,11 +2,11 @@
 gsd_state_version: "1.0"
 milestone: v1.0.0
 status: Awaiting next milestone
-stopped_at: Phase 02 complete — all phases complete
-last_updated: "2026-10-25T14:20:30.073Z"
+stopped_at: Milestone v1.0.0 summary generated
+last_updated: "2026-10-25T14:23:37.378Z"
 last_activity: 2026-10-25
 last_activity_desc: Milestone v1.0.0 completed and archived
-state_head: f137afc140ba42d9ca1ad07671494cfa643deb0f
+state_head: 2552b0ee4b57e9808617ba7e88c35aed520cb3e3
 progress:
   total_phases: 2
   completed_phases: 2
@@ -93,9 +93,9 @@ Items acknowledged and deferred at milestone close, most recent first:
 
 ## Session Continuity
 
-Last session: 2026-10-25
-Stopped at: Milestone v1.0.0 — Phase 02 complete; код-ревью (2 fixes), security review (threats_open 0), UAT 6/6 passed
-Resume file: None
+Last session: 2026-10-25T14:23:37.347Z
+Stopped at: Milestone v1.0.0 summary generated
+Resume file: .planning/reports/MILESTONE_SUMMARY-v1.0.0.md
 
 ## Operator Next Steps
 
