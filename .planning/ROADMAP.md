@@ -10,7 +10,7 @@
 - Integer phases (1, 2): Planned milestone work
 - Decimal phases (N.1, N.2): Urgent insertions (marked with INSERTED)
 
-- [ ] **Phase 1: About-line footer + two-layer tests** - About-line «Калькулятор v1.0.0» в `<footer data-testid="about-line">` внутри `<main class="calculator">` + структурные тесты и UI e2e + перегенерированный скриншот
+- [x] **Phase 1: About-line footer + two-layer tests** - About-line «Калькулятор v1.0.0» в `<footer data-testid="about-line">` внутри `<main class="calculator">` + структурные тесты и UI e2e + перегенерированный скриншот (completed 2026-10-25)
 - [ ] **Phase 2: Documentation sync** - README, `docs/about.md`, `docs/memory.md` и счётчики тестов в `AGENTS.md` актуализированы под фичу + наблюдения о GSD-цикле
 
 ## Phase Details
@@ -27,7 +27,7 @@
   3. UI e2e в `tests/ui/calculator.spec.js` проходит: `getByTestId("about-line")` видим и содержит актуальную версию; JS калькулятора не изменён; центрированный body-grid не сломан
   4. `npm run lint`, `npm test` и `npm run test:ui` — зелёные; скриншот `docs/screenshots/e2e-calculator.png` перегенерирован и включён в коммит фичи
 
-**Plans**: 1/1 plans executed
+**Plans**: 1/1 plans complete
 
 Plans:
 - [x] 01-01: TBD (заполняется при `/gsd-plan-phase 1`)
@@ -58,5 +58,5 @@ Phases execute in numeric order: 1 → 2
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. About-line footer + two-layer tests | 1/1 | In Progress | - |
+| 1. About-line footer + two-layer tests | 1/1 | Complete    | 2026-10-25 |
 | 2. Documentation sync | 0/1 | Not started | - |
