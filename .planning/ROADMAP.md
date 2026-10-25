@@ -11,7 +11,7 @@
 - Decimal phases (N.1, N.2): Urgent insertions (marked with INSERTED)
 
 - [x] **Phase 1: About-line footer + two-layer tests** - About-line «Калькулятор v1.0.0» в `<footer data-testid="about-line">` внутри `<main class="calculator">` + структурные тесты и UI e2e + перегенерированный скриншот (completed 2026-10-25)
-- [ ] **Phase 2: Documentation sync** - README, `docs/about.md`, `docs/memory.md` и счётчики тестов в `AGENTS.md` актуализированы под фичу + наблюдения о GSD-цикле
+- [x] **Phase 2: Documentation sync** - README, `docs/about.md`, `docs/memory.md` и счётчики тестов в `AGENTS.md` актуализированы под фичу + наблюдения о GSD-цикле в `docs/memory.md` (completed 2026-10-25)
 
 ## Phase Details
 
@@ -31,7 +31,7 @@
 
 Plans:
 - [x] 01-01: TBD (заполняется при `/gsd-plan-phase 1`)
-- [ ] 01-02: TBD (заполняется при `/gsd-plan-phase 1`)
+- [x] 01-02: TBD (заполняется при `/gsd-plan-phase 1`)
 
 **UI hint**: yes
 
@@ -46,10 +46,10 @@ Plans:
   2. `docs/about.md` описывает about-line, а счётчики тестов в `AGENTS.md` совпадают с фактическим их числом после Phase 1
   3. В `docs/memory.md` есть раздел с наблюдениями о GSD-цикле (что удобно/неудобно, где дублирует AGENTS.md)
 
-**Plans**: TBD
+**Plans**: 1/1 plans complete
 
 Plans:
-- [ ] 02-01: TBD (заполняется при `/gsd-plan-phase 2`)
+- [x] 02-01: TBD (заполняется при `/gsd-plan-phase 2`)
 
 ## Progress
 
@@ -59,4 +59,4 @@ Phases execute in numeric order: 1 → 2
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. About-line footer + two-layer tests | 1/1 | Complete    | 2026-10-25 |
-| 2. Documentation sync | 0/1 | Not started | - |
+| 2. Documentation sync | 1/1 | Complete    | 2026-10-25 |

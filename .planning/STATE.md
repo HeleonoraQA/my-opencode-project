@@ -1,19 +1,19 @@
 ---
 gsd_state_version: "1.0"
 milestone: v1.0.0
-current_phase: 2
+current_phase: 02
 current_phase_name: Documentation sync
 status: executing
 stopped_at: Phase 01 complete, ready to plan Phase 2
-last_updated: "2026-10-25T13:46:01.582Z"
+last_updated: "2026-10-25T13:53:30.000Z"
 last_activity: 2026-10-25
-last_activity_desc: Phase 01 complete, transitioned to Phase 2
-state_head: 9d8d97cf569144fb416f406ad10250bd2c84e59b
+last_activity_desc: Phase 02 plan 02-01 executed (3 tasks committed)
+state_head: 88ba20dcda0c97e919c8fb27af115d1116f13812
 progress:
   total_phases: 2
   completed_phases: 1
   total_plans: 2
-  completed_plans: 1
+  completed_plans: 2
 ---
 
 <!-- STATE-MD-SCHEMA:END:frontmatter -->
@@ -25,16 +25,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-10-25)
 
 **Core value:** Пройти полный GSD-цикл без риска для конфигурации репозитория: изолированная мини-фича (about-line в подвале калькулятора) с проверками в тестах и обновлением документации.
-**Current focus:** Phase 01 — About-line footer + two-layer tests
+**Current focus:** Phase 02 — Documentation sync
 
 ## Current Position
 
-Phase: 2 (Documentation sync) — READY TO EXECUTE
-Plan: Not started
-Status: Ready to execute
-Last activity: 2026-10-25 — Phase 01 complete, transitioned to Phase 2
+Phase: 02 (Documentation sync) — EXECUTING
+Plan: 2 of 2 — 02-01 complete (SUMMARY написан, фаза ждёт verify-work)
+Status: Phase 02 executed, ready for verification
+Last activity: 2026-10-25 — 02-01 executed: README/about/memory/AGENTS sync, 3 commits
 
-Progress: [█████░░░░░] 50%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -59,6 +59,7 @@ Progress: [█████░░░░░] 50%
 | Plan | Duration | Tasks | Files |
 |------|----------|-------|-------|
 | Phase 1 P01 | 6 min | 3 tasks | 4 files |
+| Phase 2 P01 | 4 min | 3 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -71,6 +72,10 @@ Recent decisions affecting current work:
 - [Roadmap]: Документация отдельной фазой 2 — зависит от финального текста футера, который ассерты фиксируют
 - [Phase 1]: About-line footer реализован как последний ребёнок <main class=calculator> с data-testid=about-line и data-version; sync-версия вычисляется из package.json в обоих тестовых слоях (не literal)
 - [Phase 1]: Prohibition P3 (не хардкодить версию в тестах) закреплён guard-командой в Task 2 verify, не постоянным ассертом
+- [Phase 2]: Счётчики тестов в доках сверяются динамическим гейтом с живым выводом `npm test` (парсинг «Tests N passed»), а не перепечатыванием числа из плана — дрейф снова даёт красный гейт
+- [Phase 2]: README не переписан с нуля — about-line вписан в существующие разделы (Структура/Команды/UI-проверки) per prohibition целостности README
+- [Phase 2]: `docs/memory.md` — consumer-facing журнал: раздел «GSD-цикл (эксперимент)» — сжатие `.planning/.../NOTES.md` (5–7 bullets), а не дубликат целого файла; NOTES.md не изменён
+- [Phase 2]: AGENTS.md без новых счётчиков (assumption A2): DOCS-02 для него сведён к отсутствию «119» и актуализации описания `tests/` (упоминание плагинных тестов)
 
 ### Pending Todos
 
@@ -90,6 +95,6 @@ Items acknowledged and deferred at milestone close, most recent first:
 
 ## Session Continuity
 
-Last session: 2026-10-25T11:09:19.836Z
-Stopped at: Phase 01 complete, ready to plan Phase 2
+Last session: 2026-10-25T13:53:30.000Z
+Stopped at: Completed 02-01-PLAN.md (Phase 02 — all plans executed, ready for verify-work)
 Resume file: None
