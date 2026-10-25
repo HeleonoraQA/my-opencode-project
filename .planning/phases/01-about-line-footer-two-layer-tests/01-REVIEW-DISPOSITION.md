@@ -5,7 +5,7 @@ titles: json
 findings:
   - id: WR-01
     severity: warning
-    disposition: open
+    disposition: fixed
     title: "Last-child assertion проходит зелёным, когда footer вынесен СИБЛИНГОМ за пределы `<main>` (слепая зона whitespace-механики)"
   - id: IN-01
     severity: info
@@ -19,16 +19,16 @@ findings:
     severity: info
     disposition: open
     title: "Негативный regex неинтерактивности пропускает `<abbr>`/`<area>` (word-boundary после `a`)"
-open: 4
+open: 3
 total: 4
-recorded: 2026-10-25T11:17:32.782Z
+recorded: 2026-10-25T11:23:05.342Z
 ---
 
 # Phase 01: Code Review Disposition
 
 | Finding | Severity | Disposition | Source |
 |---------|----------|-------------|--------|
-| WR-01 | warning | open | - |
+| WR-01 | warning | fixed | 01-REVIEW-FIX.md |
 | IN-01 | info | open | - |
 | IN-02 | info | open | - |
 | IN-03 | info | open | - |
