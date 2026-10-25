@@ -16,9 +16,9 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Docs
 
-- [ ] **DOCS-01**: README упоминает about-line и как её проверить (запуск `npm run test:ui`)
-- [ ] **DOCS-02**: `docs/about.md` и счётчики тестов в `AGENTS.md` актуализированы под новую фичу
-- [ ] **DOCS-03**: В `docs/memory.md` записаны наблюдения о GSD-цикле (что удобно/неудобно, где дублирует AGENTS.md)
+- [x] **DOCS-01**: README упоминает about-line и как её проверить (запуск `npm run test:ui`)
+- [x] **DOCS-02**: `docs/about.md` и счётчики тестов в `AGENTS.md` актуализированы под новую фичу
+- [x] **DOCS-03**: В `docs/memory.md` записаны наблюдения о GSD-цикле (что удобно/неудобно, где дублирует AGENTS.md)
 
 ## v2 Requirements
 
@@ -52,9 +52,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | FOOTER-02 | Phase 1 | Complete |
 | FOOTER-03 | Phase 1 | Complete |
 | FOOTER-04 | Phase 1 | Complete |
-| DOCS-01 | Phase 2 | Pending |
-| DOCS-02 | Phase 2 | Pending |
-| DOCS-03 | Phase 2 | Pending |
+| DOCS-01 | Phase 2 | Complete |
+| DOCS-02 | Phase 2 | Complete |
+| DOCS-03 | Phase 2 | Complete |
 
 **Coverage:**
 - v1 requirements: 7 total
@@ -63,4 +63,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-10-25*
-*Last updated: 2026-10-25 after initial definition*
+*Last updated: 2026-10-25 after Phase 2 plan 02-01 execution*
