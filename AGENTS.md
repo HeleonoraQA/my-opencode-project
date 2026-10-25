@@ -14,7 +14,7 @@
   - `mcp.servers.playwright` в `opencode.json` — Playwright MCP (`npx @playwright/mcp`, Chrome headless, isolated); инструмент `playwright_browser_run_code_unsafe` запрещён
   - `.opencode/skills/` — навыки агента (`lint`, `run-tests`)
   - `.opencode/plugins/` — плагин V2 `lint-and-guard` (автолинтер в `tool.hook("execute.after")`, блокировка защищённых путей в `tool.hook("execute.before")`)
-  - `tests/` — тесты конфигурации, структуры и прав доступа
+  - `tests/` — тесты конфигурации, структуры, прав доступа и плагина (Vitest)
   - `tests/ui/` — UI e2e на Playwright Test (`calculator.spec.js`, статический сервер `server.mjs`), `playwright.config.js` поднимает сервер и использует Chrome channel
   - `docs/` — документация проекта (`plan.md`, `memory.md`, `about.md`)
   - `.husky/` — Git-хуки (`pre-commit`, `pre-push`, `commit-msg`)

@@ -31,6 +31,7 @@
 ## Демо: калькулятор
 - `calculator.html` — один файл (HTML + CSS + JS), без внешних зависимостей и сборки. Открывается напрямую или через локальный сервер.
 - UI: тёмная тема, дисплей `output` с `aria-live`, 20 кнопок, сетка 4×5, адаптив до 390 px.
+- About-line: семантический `<footer data-testid="about-line" data-version="1.0.0">Калькулятор v1.0.0</footer>` — последний ребёнок `<main class="calculator">`. Версия — single source of truth из `package.json`: sync-тест в `tests/structure.test.js` вычисляет ожидание через `readFileSync`+`JSON.parse` (не хардкод) и включает WR-01 guard (`footerEnd < mainEnd` через `toBeLessThan`) — защита от ложного «последний ребёнок»-зелёного, которую нашёл code review Phase 1.
 - Функции: `+ − × ÷`, `%`, `±`, `⌫` (показан стрелкой), `C`, десятичная запятая; поддержка клавиатуры (цифры, `.`/`,`, операторы, `Enter`/`=`, `Backspace`, `Esc`).
 - Защита от ошибок: деление на 0 → `Ошибка`, ограничение 12 цифр, округление до 12 значащих цифр, экспоненциальный формат для очень больших/малых чисел.
 - Проверка UI через Playwright MCP (Chrome headless): сценарии `7×8=56`, `1,2+3,4=4,6`, `9÷4=2,25`, `50%→0,5`, `5÷0→Ошибка`, backspace `123→12`, клавиатура `7*6 Enter=42`; консоль — 0 ошибок, 0 предупреждений.
@@ -39,7 +40,7 @@
 ## UI e2e (Playwright Test)
 - `playwright.config.js`: `testDir: tests/ui`, Chrome channel (системный Chrome, браузеры не скачиваются), viewport 1280×800, `webServer` поднимает `tests/ui/server.mjs` на `127.0.0.1:8123`.
 - `tests/ui/server.mjs` — статический сервер проекта (без зависимостей): отдаёт `calculator.html` на `/`, проверяет путь на traversal.
-- `tests/ui/calculator.spec.js` — один сквозной сценарий: загрузка страницы, `9 ÷ 4 = 2,25`, `5 ÷ 0 → Ошибка`, `C → 0`, клавиатура `7*6 Enter = 42`, финал `12,5 × 4 = 50`; собирает `console`/`pageerror` и требует пустой список ошибок; сохраняет `docs/screenshots/e2e-calculator.png`.
+- `tests/ui/calculator.spec.js` — один сквозной сценарий: загрузка страницы (`getByTestId("about-line")` видим, содержит `Калькулятор v<версия>` и `data-version` — оба значения вычисляются из `package.json`), `9 ÷ 4 = 2,25`, `5 ÷ 0 → Ошибка`, `C → 0`, клавиатура `7*6 Enter = 42`, финал `12,5 × 4 = 50`; собирает `console`/`pageerror` и требует пустой список ошибок; сохраняет `docs/screenshots/e2e-calculator.png`.
 - Vitest не подхватывает UI-спеки: в `vitest.config.js` добавлен `exclude: tests/ui/**`; запуск — `npm run test:ui`.
 - Наблюдение за прогоном: `use.launchOptions.slowMo` берётся из `PW_SLOW_MO`, поэтому `$env:PW_SLOW_MO=700; npx playwright test tests/ui/calculator.spec.js --headed` открывает Chrome и выполняет шаги с паузами (~17 с). Скриншот лога этого прогона — `docs/screenshots/e2e-run.png`.
 - CI: шаг `npm run test:ui` после `npm test`.
@@ -51,7 +52,7 @@
 ## Команды
 - `npm install` — установка зависимостей.
 - `npm run lint` — проверка ESLint.
-- `npm test` — все тесты (119: 18 config + 23 structure + 51 e2e + 27 plugins).
+- `npm test` — все тесты (123: 18 config + 27 structure + 51 e2e + 27 plugins).
 - `npm run test:e2e` — только e2e-тесты прав.
 - `npm run test:ui` — UI e2e на Playwright Test (1 тест, Chrome channel).
 - `npm run test:watch` — тесты в режиме наблюдения.
