@@ -45,6 +45,11 @@ describe("calculator page", () => {
     expect(html).not.toMatch(/<script[^>]+src=/);
     expect(html).not.toMatch(/<link[^>]+stylesheet/);
   });
+
+  it("renders the about-line footer", () => {
+    expect(html).toContain('data-testid="about-line"');
+    expect(html.match(/<footer\b/g)).toHaveLength(1);
+  });
 });
 
 describe("agent skills", () => {

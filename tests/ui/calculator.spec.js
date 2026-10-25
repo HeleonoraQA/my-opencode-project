@@ -14,6 +14,8 @@ test("calculator: arithmetic, errors and keyboard stay green", async ({ page }) 
   await page.goto("/calculator.html");
   await expect(page).toHaveTitle("Калькулятор");
   await expect(display).toHaveText("0");
+  const about = page.getByTestId("about-line");
+  await expect(about).toBeVisible();
 
   // Дроби и округление: 9 ÷ 4 = 2,25
   await key("9");
