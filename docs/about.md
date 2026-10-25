@@ -12,7 +12,7 @@
   2. `policies` — `tool.use` → `deny` для тех же путей: не перекрывается сохранёнными разрешениями «Allow always» и правилами агентов;
   3. плагин `.opencode/plugins/lint-and-guard` — блокировка в `execute.before` (защита в глубину).
 - В V2 `*` совпадает и с `/`, поэтому паттерн действует на любой вложенности, а префикс `**/` не нужен и не покрыл бы корневой `.env`.
-- Проверки: `tests/e2e/permissions.test.js` (48 сценариев), `tests/config.test.js` (форма `permissions`/`policies`), скриншоты в `docs/screenshots/`.
+- Проверки: `tests/e2e/permissions.test.js` (51 сценарий), `tests/config.test.js` (форма `permissions`/`policies`), скриншоты в `docs/screenshots/`.
 
 ## Автолинтер
 - Плагин `.opencode/plugins/lint-and-guard/index.js` после успешного `write`/`edit`/`patch` запускает `eslint --fix` по изменённому `.js`-файлу (остальные расширения не покрыты `eslint.config.js`).
